@@ -16,6 +16,10 @@ var CoolDown:float = 1.0;
 var weaponTag:String;
 var launchPos:Vector3;
 
+var gauge:Texture;
+
+var skin:GUISkin;
+
 private var hit:RaycastHit = new RaycastHit();
 private var raycastLayers:LayerMask = -1;
 
@@ -48,6 +52,7 @@ function getAimPos():Vector3 {
 function Start () {
 	var tmp:int = ignoreLayers;
 	raycastLayers = ~tmp;
+	GUI.skin = skin;
 }
 
 function Update () {
@@ -96,4 +101,9 @@ function Reload(weapon:GameObject) {
 		bullet = weapon;
 		LastFireTime = Time.time;
 	}
+}
+
+function OnGUI() {
+	var tmp = Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
+	GUI.Box(Rect(100, 100, 20, 20 * tmp), gauge, "gauge");
 }
