@@ -11,6 +11,7 @@ function Start () {
 }
 
 function Update () {
+	turretController.enabled = IsControllable();
 	if (IsControllable()) {
 		var goal = gunnerEye.position + (gunnerEye.forward * 500);
 		if (Physics.Raycast(gunnerEye.position, gunnerEye.forward, hit, 500, ~gameObject.layer)) {

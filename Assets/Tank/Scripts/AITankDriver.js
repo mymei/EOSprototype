@@ -1,8 +1,11 @@
 ﻿#pragma strict
 
 var goals:Transform[];
+var mesh:NavMesh;
 
 private var currentGoal:int;
+private var currentPathNode:int;
+private var path: NavMeshPath;
 
 function Start () {
 	currentGoal = 0;
@@ -17,9 +20,24 @@ var radiusForArrival = 5;
 
 private var history1:float;
 private var history2:float;
+
+function Awake() {
+	path = new NavMeshPath();
+}
+
 function Update () {
 	if (currentGoal < goals.Length) {
-		var direction = goals[currentGoal].position - transform.position;
+		if (path.corners.Length == 0) {
+			mesh.CalculatePath(transform.position, goals[currentGoal].position, -1, path);
+			if (path.status == NavMeshPathStatus.PathInvalid || path.corners.Length < 2) {
+				currentGoal = goals.Length;
+				return;
+			} else {
+				currentPathNode = 1;
+			}
+		}	
+	
+		var direction = path.corners[currentPathNode] - transform.position;
 		var ref1 = Vector3.Dot(transform.forward, direction);
 		var ref2 = Vector3.Dot(transform.up, Vector3.Cross((ref1 > 0?1:-1)*transform.forward, direction)); 
 		
@@ -31,9 +49,15 @@ function Update () {
 		history2 = ref2;
 		
 		if (IsArrived(direction)) {
-			currentGoal++;	
-			if (currentGoal == goals.Length) {
-				transform.BroadcastMessage("GetInput", [0, 0], SendMessageOptions.DontRequireReceiver);
+			currentPathNode ++;
+			if (currentPathNode == path.corners.Length) {
+				currentGoal++;
+				path.ClearCorners();
+				
+				if (currentGoal == goals.Length) {
+					currentGoal = 0;
+//					transform.BroadcastMessage("GetInput", [0, 0], SendMessageOptions.DontRequireReceiver);
+				}
 			}
 		}
 	}

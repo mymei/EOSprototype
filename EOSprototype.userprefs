@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tank\Scripts\WeaponChanger.js">
+    <Files>
+      <File FileName="Assets\Tank\Scripts\TurretController.js" Line="22" Column="18" />
+      <File FileName="Assets\Tank\Scripts\WeaponChanger.js" Line="29" Column="18" />
+      <File FileName="Assets\Tank\Scripts\PlayerTurretGunner.js" Line="22" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -17,6 +17,7 @@ var weaponTag:String;
 var launchPos:Vector3;
 
 var gauge:Texture;
+var gauge2:GUITexture;
 
 var skin:GUISkin;
 
@@ -25,7 +26,7 @@ private var raycastLayers:LayerMask = -1;
 
 private var actualTargetPos:Vector3;
 private var gun:Transform;
-private var bullet:GameObject;
+private var magazine:Magazine;
 
 function AimControl(targetPos:Vector3) {
 	aimPos = targetPos;
@@ -52,7 +53,7 @@ function getAimPos():Vector3 {
 function Start () {
 	var tmp:int = ignoreLayers;
 	raycastLayers = ~tmp;
-	GUI.skin = skin;
+//	GUI.skin = skin;
 }
 
 function Update () {
@@ -88,22 +89,36 @@ function GetTargetPos() {
 
 private var LastFireTime:float = 0;
 function Fire() {
-	if (bullet != null) {
-		if (CoolDown < Time.time - LastFireTime) {
-			LastFireTime = Time.time;
-			Instantiate(bullet, gun.position + gun.TransformDirection(launchPos), gun.rotation);
-		} 
+	if (magazine != null) {
+		if (magazine.GetAmmoLeft() > 0) {
+			if (CoolDown < Time.time - LastFireTime) {
+				LastFireTime = Time.time;
+				magazine.Fire(gun.position + gun.TransformDirection(launchPos), gun.rotation);
+			}
+		}
 	}
 }
 
-function Reload(weapon:GameObject) {
-	if (bullet != weapon) {
-		bullet = weapon;
+function Reload(newMagazine:Magazine) {
+	if (newMagazine != magazine) {
+		magazine = newMagazine;
 		LastFireTime = Time.time;
 	}
 }
 
+function OnEnable() {
+	if (gauge2 != null)
+		gauge2.gameObject.SetActive(true);
+}
+
+function OnDisable() {
+	if (gauge2 != null)
+		gauge2.gameObject.SetActive(false);
+}
+
 function OnGUI() {
-	var tmp = Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
-	GUI.Box(Rect(100, 100, 20, 20 * tmp), gauge, "gauge");
+//	gauge2.texture.texelSize.x = 10.0;
+	var tmp = magazine.GetAmmoLeft() == 0?1:Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
+	GUI.DrawTexture(Rect(10, Screen.height - gauge.height - 10, gauge.width * (1 - tmp), gauge.height), gauge);
+	GUI.Label(Rect(10, Screen.height - 50, 100, 20), "" + magazine.GetAmmoLeft());
 }
