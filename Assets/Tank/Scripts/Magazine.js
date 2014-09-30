@@ -18,6 +18,12 @@ function GetAmmoLeft() {
 }
 
 function Fire(pos:Vector3, rot:Quaternion) {
-	Instantiate(bullet, pos, rot);
+	var instance = Instantiate(bullet, pos, rot);
+	instance.SendMessage("SetOwner", owner, SendMessageOptions.DontRequireReceiver);
 	ammoLeft --;
+}
+
+private var owner : Transform;
+function SetOwner(_owner:Transform) {
+	owner = _owner;
 }

@@ -58,6 +58,8 @@ function Start()
 	SetupCenterOfMass();
 	
 	topSpeed = topSpeed * 1000 / 60.0;
+	
+	BroadcastMessage("SetOwner", transform, SendMessageOptions.DontRequireReceiver);
 }
 
 function Update()

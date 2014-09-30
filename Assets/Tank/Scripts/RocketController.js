@@ -25,7 +25,27 @@ function Update () {
 	velocity += GetAcceleration() * Time.deltaTime;
 	tr.position += velocity * Time.deltaTime;
 	dist -= velocity.magnitude * Time.deltaTime;
+	
+	var collided : boolean = false;
+	var hits : Collider[] = Physics.OverlapSphere (tr.position, 1, -1);
+	for (var c : Collider in hits) {
+		// Don't collide with triggers
+		if (c.isTrigger)
+			continue;
+		if (1 << c.gameObject.layer == LayerMask.GetMask("vehicle")) {
+			var com = c.GetComponent("Armor") as Armor;
+			if (com != null && com.GetOwner() != owner) {
+			} else {
+				continue;
+			}		
+		}
+		collided = true;
+	}
 	if (Time.time > spawnTime + lifeTime || dist < 0) {
+		collided = true;
+	}
+	
+	if (collided) {
 		Destroy(gameObject);
 	}
 }
@@ -40,4 +60,9 @@ function OnEnable () {
 	accel_vector = tmp.normalized * Mathf.Sqrt(l * l * (1 + tan_sqr)) + 10 * Vector3.up; 
 
 	spawnTime = Time.time;
+}
+
+private var owner : Transform;
+function SetOwner(_owner:Transform) {
+	owner = _owner;
 }
