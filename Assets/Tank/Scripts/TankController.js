@@ -23,9 +23,6 @@ var topSpeed : float = 160;
 var resetTime : float = 5.0;
 private var resetTimer : float = 0.0;
 
-private var canSteer : boolean;
-private var canDrive : boolean;
-
 var forwardStiffness = 500;
 var sidewayStiffness = 100;
 
@@ -40,8 +37,6 @@ class CaterpillarWheel
 	var collider : WheelCollider;
 	var wheelGraphic : Transform;
 	var tireGraphic : Transform;
-	var driveWheel : boolean = false;
-	var steerWheel : boolean = false;
 	var lastEmitPosition : Vector3 = Vector3.zero;
 	var lastEmitTime : float = Time.time;
 	var wheelVelo : Vector3 = Vector3.zero;
@@ -50,9 +45,6 @@ class CaterpillarWheel
 
 function Start()
 {	
-	// Measuring 1 - 60
-	accelerationTimer = Time.time;
-	
 	SetupWheelColliders();
 	
 	SetupCenterOfMass();
@@ -76,13 +68,7 @@ function FixedUpdate()
 	// The rigidbody velocity is always given in world space, but in order to work in local space of the car model we need to transform it first.
 	var relativeVelocity : Vector3 = transform.InverseTransformDirection(rigidbody.velocity);
 	
-	CalculateState();	
-	
-	UpdateFriction();
-	
-	ApplyThrottle(canDrive, relativeVelocity);
-	
-	ApplySteering(canSteer, relativeVelocity);
+	ApplyThrottle(relativeVelocity);	
 }
 
 /**************************************************/
@@ -141,6 +127,8 @@ function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
 	wheel.collider = wc;
 	wc.sidewaysFriction = wfc;
 	wc.forwardFriction = wfc;
+	wc.sidewaysFriction.stiffness = sidewayStiffness;
+	wc.forwardFriction.stiffness = forwardStiffness;
 	wheel.wheelGraphic = wheelTransform;
 	
 	var tmpTransforms = wheelTransform.GetComponentsInChildren(Transform);
@@ -155,13 +143,6 @@ function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
 		}
 	}
 	wheel.collider.radius = wheelRadius;
-	
-	if (isFrontWheel) {
-		wheel.steerWheel = true;
-	}
-	else {
-		wheel.driveWheel = true;
-	}
 		
 	return wheel;
 }
@@ -216,32 +197,6 @@ function UpdateWheelGraphics(relativeVelocity : Vector3)
 	}
 }
 
-function CalculateState()
-{
-	canDrive = false;
-	canSteer = false;
-	
-	for(var w : CaterpillarWheel in wheels)
-	{
-		if(w.collider.isGrounded)
-		{
-			if(w.steerWheel)
-				canSteer = true;
-			if(w.driveWheel)
-				canDrive = true;
-		}
-	}
-}
-
-function UpdateFriction()
-{	
-	for(var w : CaterpillarWheel in wheels)
-	{
-		w.collider.sidewaysFriction.stiffness = sidewayStiffness;
-		w.collider.forwardFriction.stiffness = forwardStiffness;
-	}
-}
-
 var rpmMonitor : float;
 
 function getMotorTorque(torque:float, rpm:float) {
@@ -249,7 +204,7 @@ function getMotorTorque(torque:float, rpm:float) {
 	return (maxRPM - Mathf.Min(maxRPM, Mathf.Abs(rpm))) / maxRPM * torque;
 }
 
-function ApplyThrottle(canDrive : boolean, relativeVelocity : Vector3)
+function ApplyThrottle(relativeVelocity : Vector3)
 {
 	for(var index = 0; index < wheels.length; index++)
 	{
@@ -262,11 +217,6 @@ function ApplyThrottle(canDrive : boolean, relativeVelocity : Vector3)
 		w.collider.brakeTorque = (!flag?(brakeTorque - defaultTorque) * Mathf.Abs(throttle):0) + defaultTorque;
 	}	
 	rpmMonitor = wheels[0].collider.rpm;
-}
-
-function ApplySteering(canSteer : boolean, relativeVelocity : Vector3)
-{
-
 }
 
 /**************************************************/

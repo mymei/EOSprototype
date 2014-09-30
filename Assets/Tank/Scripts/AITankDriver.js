@@ -22,11 +22,15 @@ private var history1:float;
 private var history2:float;
 
 function Awake() {
-	path = new NavMeshPath();
 }
 
+private var pathInvalidated = false;
 function Update () {
 	if (currentGoal < goals.Length) {
+		if (path == null) {
+			path = new NavMeshPath();
+		}
+		
 		if (path.corners.Length == 0) {
 			mesh.CalculatePath(transform.position, goals[currentGoal].position, -1, path);
 			if (path.status == NavMeshPathStatus.PathInvalid || path.corners.Length < 2) {
@@ -55,9 +59,18 @@ function Update () {
 				path.ClearCorners();
 				
 				if (currentGoal == goals.Length) {
-					currentGoal = 0;
-//					transform.BroadcastMessage("GetInput", [0, 0], SendMessageOptions.DontRequireReceiver);
+//					currentGoal = 0;
+					transform.BroadcastMessage("GetInput", [0, 0], SendMessageOptions.DontRequireReceiver);
 				}
+			}
+		} else {						
+			if (ref1 > 0) {
+				if (pathInvalidated) {
+					pathInvalidated = false;
+					path.ClearCorners();
+				}
+			} else {
+				pathInvalidated = true;
 			}
 		}
 	}

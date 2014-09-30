@@ -27,16 +27,12 @@ function SetEye(eye:Transform) {
 	gunnerEye = eye;
 }
 
-function ResetEye() {
-	gunnerEye = null;
-}
-
 function IsControllable():boolean {
 	return gunnerEye != null && turretController != null;
 }
 
 function HandleInput() {
-	if (IsControllable()) {
+	if (IsControllable() && turretController.IsSafetySwitchOff()) {
 		if (Input.GetButton("Fire1")) {
 			turretController.Fire();
 		} else if (Input.GetButton("Fire2")) {
@@ -49,7 +45,7 @@ function HandleInput() {
 
 private var screenRect = new Rect(0, 0, Screen.width, Screen.height);
 function OnGUI() {
-	if (IsControllable()) {
+	if (IsControllable() && turretController.IsSafetySwitchOff()) {
 		var screenPos = gunnerEye.camera.WorldToScreenPoint(turretController.GetTargetPos());
 		GUI.Box(Rect(screenPos.x - 32, (Screen.height - screenPos.y) - 32, 64, 64), targetTexture);
 		if (!screenRect.Contains(screenPos)) {

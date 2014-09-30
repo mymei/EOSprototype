@@ -4,6 +4,7 @@ var acceleration : float = 10;
 var lifeTime : float = 0.5;
 var dist : float = 10000;
 var gravity : float = 9.8;
+var explosion : GameObject;
 
 private var spawnTime : float = 0.0;
 private var tr : Transform;
@@ -46,6 +47,9 @@ function Update () {
 	}
 	
 	if (collided) {
+		if (explosion != null) {
+			EffectCache.Spawn(explosion, transform.position, transform.rotation, 1.0);
+		}
 		Destroy(gameObject);
 	}
 }

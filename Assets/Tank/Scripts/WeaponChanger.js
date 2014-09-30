@@ -18,18 +18,35 @@ function Update () {
 	}
 }
 
-function ResetGunner() {
+function ResetAllSafetySwitch() {
 	for (var turret:Transform in turretList) {
 		if (turret != null) {
-			turret.SendMessage("ResetEye", SendMessageOptions.DontRequireReceiver); 
+			turret.GetComponent(TurretController).SetSafetySwitch(true);
 		}
 	}
 }
 
 function SetEye(eye:Transform) {
 	gunnerEye = eye;
-	if (magazineList[0] != null) {
-		ChangeMagazine(magazineList[0] as Magazine);
+	for (var turret:Transform in turretList) {
+		if (turret != null) {
+			turret.SendMessage("SetEye", gunnerEye, SendMessageOptions.DontRequireReceiver);
+		}
+	}
+	for (var i = 0; i < magazineList.length; i ++) {
+		var magazine = magazineList[i] as Magazine;		
+		for (var turret:Transform in turretList) {
+			if (turret != null) {
+				var turretController = turret.GetComponent(TurretController);
+				if (turretController.GetMagazine() == null && magazine.bullet.CompareTag(turretController.weaponTag)) {
+					turretController.Reload(magazine);
+					if (i == 0) {
+						turretController.SetSafetySwitch(false);
+					}
+					break;
+				}
+			}
+		}
 	}
 }
 
@@ -39,10 +56,10 @@ function ChangeMagazine(magazine:Magazine) {
 			if (turret != null) {
 				var turretController = turret.GetComponent(TurretController);
 				if (magazine.bullet.CompareTag(turretController.weaponTag)) {
-					ResetGunner();
-					turretController.Reload(magazine);
-					turret.SendMessage("SetEye", gunnerEye, SendMessageOptions.DontRequireReceiver);
-					gunnerEye.SendMessage("SetTarget", turret, SendMessageOptions.DontRequireReceiver); 				
+					ResetAllSafetySwitch();
+					turretController.SetSafetySwitch(false);
+					gunnerEye.SendMessage("SetTarget", turret, SendMessageOptions.DontRequireReceiver); 
+					break;				
 				}
 			}
 		}	

@@ -17,7 +17,6 @@ var weaponTag:String;
 var launchPos:Vector3;
 
 var gauge:Texture;
-var gauge2:GUITexture;
 
 var skin:GUISkin;
 
@@ -106,19 +105,22 @@ function Reload(newMagazine:Magazine) {
 	}
 }
 
-function OnEnable() {
-	if (gauge2 != null)
-		gauge2.gameObject.SetActive(true);
+function GetMagazine() : Magazine {
+	return magazine;
 }
 
-function OnDisable() {
-	if (gauge2 != null)
-		gauge2.gameObject.SetActive(false);
+private var SafetySwitch = true;
+function SetSafetySwitch(flag:boolean) {
+	SafetySwitch = flag;
+}
+function IsSafetySwitchOff():boolean {
+	return SafetySwitch;
 }
 
 function OnGUI() {
-//	gauge2.texture.texelSize.x = 10.0;
-	var tmp = magazine.GetAmmoLeft() == 0?1:Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
-	GUI.DrawTexture(Rect(10, Screen.height - gauge.height - 10, gauge.width * (1 - tmp), gauge.height), gauge);
-	GUI.Label(Rect(10, Screen.height - 50, 100, 20), "" + magazine.GetAmmoLeft());
+	if (SafetySwitch && magazine != null) {
+		var tmp = magazine.GetAmmoLeft() == 0?1:Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
+		GUI.DrawTexture(Rect(10, Screen.height - gauge.height - 10, gauge.width * (1 - tmp), gauge.height), gauge);
+		GUI.Label(Rect(10, Screen.height - 50, 100, 20), "" + magazine.GetAmmoLeft());
+	}
 }
