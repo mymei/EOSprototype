@@ -36,8 +36,10 @@ function HandleInput() {
 		if (Input.GetButton("Fire1")) {
 			turretController.Fire();
 		} else if (Input.GetButton("Fire2")) {
-			if (hit.collider != null) {
+			if (hit.collider != null && 1 << hit.collider.gameObject.layer == LayerMask.GetMask("vehicle")) {
 				turretController.lockOn(hit.collider.transform);
+			} else {
+				turretController.lockOn(null);
 			}
 		}	
 	}
@@ -47,9 +49,11 @@ private var screenRect = new Rect(0, 0, Screen.width, Screen.height);
 function OnGUI() {
 	if (IsControllable() && turretController.IsSafetySwitchOff()) {
 		var screenPos = gunnerEye.camera.WorldToScreenPoint(turretController.GetTargetPos());
-		GUI.Box(Rect(screenPos.x - 32, (Screen.height - screenPos.y) - 32, 64, 64), targetTexture);
-		if (!screenRect.Contains(screenPos)) {
-			turretController.lockOn(null);
+		if (screenPos.z > 0) {
+			GUI.DrawTexture(Rect(screenPos.x - 32, (Screen.height - screenPos.y) - 32, 64, 64), targetTexture);
 		}
+//		if (!screenRect.Contains(screenPos)) {
+//			turretController.lockOn(null);
+//		}
 	}
 }

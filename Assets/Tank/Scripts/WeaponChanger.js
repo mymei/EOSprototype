@@ -40,7 +40,8 @@ function SetEye(eye:Transform) {
 				var turretController = turret.GetComponent(TurretController);
 				if (turretController.GetMagazine() == null && magazine.bullet.CompareTag(turretController.weaponTag)) {
 					turretController.Reload(magazine);
-					if (i == 0) {
+					if (i == 0) {									
+						gunnerEye.SendMessage("SetTarget", turret, SendMessageOptions.DontRequireReceiver); 
 						turretController.SetSafetySwitch(false);
 					}
 					break;

@@ -13,12 +13,19 @@ var cameraMaximumDistance = 10f;
 var cameraElevateAngle = 85;
 var cameraDropAngle = -20;
 
+var zoomList:float[];
+private var isZooming:boolean=false;
+private var zoomLevel:int;
+
+private var defaultFOV:float;
+
 function Start()
 {
 	targetDistance = distance;
 	if (target != null) {
 		target.SendMessage("SetEye", transform, SendMessageOptions.DontRequireReceiver); 
 	}
+	defaultFOV = camera.fieldOfView;
 }
 
 private var hit:RaycastHit = new RaycastHit();
@@ -28,10 +35,21 @@ private var targetDistance:float;
 
 function LateUpdate()
 {
-	targetDistance -= Input.GetAxis("Mouse ScrollWheel") * mouseWheelSensitivity;
-	targetDistance = Mathf.Min(cameraMaximumDistance, Mathf.Max(cameraMinimumDistance, targetDistance));
-	
-	distance = Mathf.SmoothDamp(distance, targetDistance, tmpSpeed, 0.3f);
+	if (isZooming) {
+		zoomLevel = zoomLevel + (Input.GetAxis("Mouse ScrollWheel")!=0?Mathf.Sign(Input.GetAxis("Mouse ScrollWheel")):0);
+		if (zoomLevel < -1) {
+			isZooming = false;
+		}
+		zoomLevel = Mathf.Min(zoomList.Length - 1, zoomLevel);
+	} else {
+		targetDistance -= Input.GetAxis("Mouse ScrollWheel") * mouseWheelSensitivity;
+		
+		if (cameraMinimumDistance > targetDistance) {
+			isZooming = true;
+			zoomLevel = -1;
+		}
+		targetDistance = Mathf.Min(cameraMaximumDistance, Mathf.Max(cameraMinimumDistance, targetDistance));	
+	}
 
 	var currentPosition = Input.mousePosition;
 
@@ -40,30 +58,54 @@ function LateUpdate()
 	euler.y += Input.GetAxis("Mouse X") / mouseMoveSensitivity * Mathf.Rad2Deg;
 	var offset = Quaternion.Euler(euler) * Vector3.forward;
 	
-	if (cameraMinimumDistance == targetDistance) {
+	if (isZooming) {
 		var newTargetPosition = target.position;
-		var newPosition = newTargetPosition - offset * 0.1;		
+		var newPosition = newTargetPosition - offset * 0.1;	
+		
+		ZoomCamera(zoomLevel);
 	} else {
+		distance = Mathf.SmoothDamp(distance, targetDistance, tmpSpeed, 0.3f);
 		newTargetPosition = target.position + Vector3.up * (height + Mathf.Tan(5 * Mathf.Deg2Rad) * distance);
-		newPosition = newTargetPosition - (offset * distance);	
+		newPosition = newTargetPosition - (offset * distance);
+		if(Physics.Raycast(newTargetPosition, (newPosition - newTargetPosition).normalized, hit, distance, ~target.gameObject.layer))
+			newPosition = hit.point;
+		
+		SetFOV(defaultFOV);	
 	}
-
-	var targetDirection = newPosition - newTargetPosition;
-	
-	if(Physics.Raycast(newTargetPosition, targetDirection, hit, distance, ~target.gameObject.layer))
-		newPosition = hit.point;
 	
 	transform.position = newPosition;
 	transform.LookAt(newTargetPosition);
 }
 
-function ZoomCamera() {
-
-
-}
-
 function Update() {
 	Screen.lockCursor = true;
+}
+
+function ZoomCamera(zoomLevel:int) {
+	if (zoomLevel == -1) {
+		SetFOV(defaultFOV);
+	} else {
+		SetFOV(Mathf.Atan(Mathf.Atan(defaultFOV * Mathf.Deg2Rad) / zoomList[zoomLevel]) * Mathf.Rad2Deg);
+	}
+}
+
+function SetFOV(newFOV:float) {
+	if (newFOV != camera.fieldOfView) {
+		camera.fieldOfView = newFOV;
+		if (camera.fieldOfView != defaultFOV) {
+			setTargetVisibility(false);
+		} else {
+			setTargetVisibility(true);
+		}
+	}
+}
+
+function setTargetVisibility(flag:boolean) {
+	if (target != null) {
+		for (var r : Component in target.GetComponentsInChildren(Renderer)) {
+		    (r as Renderer).enabled = flag;
+		}
+	}
 }
 
 function SetTarget(newTarget:Transform) {

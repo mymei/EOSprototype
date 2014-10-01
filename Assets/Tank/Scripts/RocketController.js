@@ -8,7 +8,7 @@ var explosion : GameObject;
 
 private var spawnTime : float = 0.0;
 private var tr : Transform;
-private var velocity : Vector3;
+var velocity : Vector3;
 private var accel_vector : Vector3;
 
 function Start () {	

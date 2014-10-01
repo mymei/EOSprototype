@@ -37,7 +37,7 @@ function lockOn(target:Transform) {
 	if (target == null) {
 		aimTarget = aimTarget == transform?transform:null;
 	} else {
-		aimTarget = aimTarget!=target?target:null;
+		aimTarget = target;
 	}
 }
 
@@ -55,6 +55,7 @@ function Start () {
 //	GUI.skin = skin;
 }
 
+private var tmpTest = 0.0;
 function Update () {
 	if (isAiming()) {
 		var _aimPos = getAimPos();
@@ -65,7 +66,8 @@ function Update () {
 		
 		var lookRotation = Quaternion.LookRotation(tmpPos - transform.localPosition);
 		
-		transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y, Time.deltaTime * turretTraverse);
+//		transform.localRotation.eulerAngles.y = Mathf.SmoothDampAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y, tmpTest, 0.1, turretTraverse);
+		transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y, turretTraverse * Time.deltaTime);
 		
 		var tmp = lookRotation.eulerAngles.x;
 		tmp = tmp > 180?Mathf.Max(360 - elevation, tmp):tmp;
@@ -114,11 +116,11 @@ function SetSafetySwitch(flag:boolean) {
 	SafetySwitch = flag;
 }
 function IsSafetySwitchOff():boolean {
-	return SafetySwitch;
+	return !SafetySwitch;
 }
 
 function OnGUI() {
-	if (SafetySwitch && magazine != null) {
+	if (IsSafetySwitchOff() && magazine != null) {
 		var tmp = magazine.GetAmmoLeft() == 0?1:Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
 		GUI.DrawTexture(Rect(10, Screen.height - gauge.height - 10, gauge.width * (1 - tmp), gauge.height), gauge);
 		GUI.Label(Rect(10, Screen.height - 50, 100, 20), "" + magazine.GetAmmoLeft());
