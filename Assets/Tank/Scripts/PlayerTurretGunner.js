@@ -33,15 +33,19 @@ function IsControllable():boolean {
 
 function HandleInput() {
 	if (IsControllable() && turretController.IsSafetySwitchOff()) {
-		if (Input.GetButton("Fire1")) {
+		if (Input.GetButtonDown("Fire1")) {
 			turretController.Fire();
-		} else if (Input.GetButton("Fire2")) {
+		} else if (Input.GetButtonDown("Fire2")) {
 			if (hit.collider != null && 1 << hit.collider.gameObject.layer == LayerMask.GetMask("vehicle")) {
 				turretController.lockOn(hit.collider.transform);
+				gunnerEye.SendMessage("SetAim", hit.collider.transform, SendMessageOptions.DontRequireReceiver);
 			} else {
+				gunnerEye.SendMessage("SetAim", gunnerEye, SendMessageOptions.DontRequireReceiver);
 				turretController.lockOn(null);
 			}
 		}	
+		
+		turretController.InputOffset(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
 	}
 }
 

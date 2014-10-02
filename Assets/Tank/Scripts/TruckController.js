@@ -33,6 +33,8 @@ var defaultTorque = 100;
 var maxRPM = 300;
 var maxTurn = 15;
 
+var truckSpeed:float;
+
 class Wheel
 {
 	var collider : WheelCollider;
@@ -59,6 +61,7 @@ function Start()
 
 function Update()
 {
+	truckSpeed = rigidbody.velocity.magnitude * 3600 / 1000;
 	var relativeVelocity : Vector3 = transform.InverseTransformDirection(rigidbody.velocity);
 	
 	Check_If_Car_Is_Flipped();

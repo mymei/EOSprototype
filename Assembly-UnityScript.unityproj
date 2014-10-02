@@ -60,6 +60,7 @@
      <Compile Include="Assets\Tank\Scripts\TruckController.js" />
      <Compile Include="Assets\Tank\Scripts\TurretController.js" />
      <Compile Include="Assets\Tank\Scripts\WeaponChanger.js" />
+     <None Include="Assets\Tank\Shaders\TestShader.shader" />
      <None Include="Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

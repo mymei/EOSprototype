@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 var target:Transform;
+var aim:Transform;
 var height:float = 5f;
 var distance:float = 4f;
 
@@ -50,26 +51,35 @@ function LateUpdate()
 		}
 		targetDistance = Mathf.Min(cameraMaximumDistance, Mathf.Max(cameraMinimumDistance, targetDistance));	
 	}
-
-	var currentPosition = Input.mousePosition;
-
-	euler.x -= Input.GetAxis("Mouse Y") / mouseMoveSensitivity * Mathf.Rad2Deg;
-	euler.x = Mathf.Max(cameraDropAngle, Mathf.Min(cameraElevateAngle, euler.x));
-	euler.y += Input.GetAxis("Mouse X") / mouseMoveSensitivity * Mathf.Rad2Deg;
-	var offset = Quaternion.Euler(euler) * Vector3.forward;
 	
+	// position
 	if (isZooming) {
 		var newTargetPosition = target.position;
-		var newPosition = newTargetPosition - offset * 0.1;	
-		
-		ZoomCamera(zoomLevel);
 	} else {
 		distance = Mathf.SmoothDamp(distance, targetDistance, tmpSpeed, 0.3f);
 		newTargetPosition = target.position + Vector3.up * (height + Mathf.Tan(5 * Mathf.Deg2Rad) * distance);
-		newPosition = newTargetPosition - (offset * distance);
+	}
+	
+	// direction
+	if (aim == null){
+		euler = Quaternion.FromToRotation(Vector3.forward, transform.forward).eulerAngles;
+	
+		euler.x -= Input.GetAxis("Mouse Y") / mouseMoveSensitivity * Mathf.Rad2Deg;
+		euler.y += Input.GetAxis("Mouse X") / mouseMoveSensitivity * Mathf.Rad2Deg;	
+	} else {
+		euler = Quaternion.FromToRotation(Vector3.forward, aim.position - newTargetPosition).eulerAngles;	
+	}
+	euler.x -= euler.x > 180?360:0;
+	euler.x = Mathf.Max(cameraDropAngle, Mathf.Min(cameraElevateAngle, euler.x));
+	
+	//distance	
+	if (isZooming) {
+		var newPosition = newTargetPosition - GetDirection() * 0.1;			
+		ZoomCamera(zoomLevel);
+	} else {		
+		newPosition = newTargetPosition - (GetDirection() * distance);
 		if(Physics.Raycast(newTargetPosition, (newPosition - newTargetPosition).normalized, hit, distance, ~target.gameObject.layer))
 			newPosition = hit.point;
-		
 		SetFOV(defaultFOV);	
 	}
 	
@@ -79,6 +89,10 @@ function LateUpdate()
 
 function Update() {
 	Screen.lockCursor = true;
+}
+
+function GetDirection() {
+	return Quaternion.Euler(euler) * Vector3.forward;
 }
 
 function ZoomCamera(zoomLevel:int) {
@@ -109,5 +123,16 @@ function setTargetVisibility(flag:boolean) {
 }
 
 function SetTarget(newTarget:Transform) {
+	setTargetVisibility(true);
 	target = newTarget;
 }
+
+function SetAim(newAim:Transform) {
+	aim = newAim == transform || newAim == aim?null:newAim;
+}
+
+//var mat:Material;
+
+//function OnRenderImage(src:RenderTexture, dest:RenderTexture) {
+//	Graphics.Blit(src, dest, mat);
+//}

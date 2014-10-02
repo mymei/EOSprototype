@@ -1,17 +1,20 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tank\Scripts\WeaponChanger.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tank\Scripts\TruckController.js">
     <Files>
-      <File FileName="Assets\Tank\Scripts\TurretController.js" Line="109" Column="38" />
-      <File FileName="Assets\Tank\Scripts\WeaponChanger.js" Line="37" Column="45" />
-      <File FileName="Assets\Tank\Scripts\PlayerTurretGunner.js" Line="25" Column="2" />
+      <File FileName="Assets\Tank\Scripts\TurretController.js" Line="69" Column="80" />
+      <File FileName="Assets\Tank\Scripts\WeaponChanger.js" Line="66" Column="5" />
+      <File FileName="Assets\Tank\Scripts\PlayerTurretGunner.js" Line="35" Column="60" />
       <File FileName="Assets\Tank\Scripts\Magazine.js" Line="24" Column="2" />
       <File FileName="Assets\Tank\Scripts\TankController.js" Line="164" Column="2" />
-      <File FileName="Assets\Tank\Scripts\AITankDriver.js" Line="58" Column="19" />
-      <File FileName="Assets\Tank\Scripts\TruckController.js" Line="1" Column="1" />
-      <File FileName="E:\Unity\Project\Assets\Scripts\JavaScripts\Car.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\AITruckDriver.js" Line="43" Column="2" />
-      <File FileName="Assets\Tank\Scripts\RocketController.js" Line="43" Column="19" />
+      <File FileName="Assets\Tank\Scripts\AITankDriver.js" Line="62" Column="24" />
+      <File FileName="Assets\Tank\Scripts\TruckController.js" Line="57" Column="36" />
+      <File FileName="E:\Unity\Project\Assets\Scripts\JavaScripts\Car.js" Line="362" Column="9" />
+      <File FileName="Assets\Tank\Scripts\AITruckDriver.js" Line="54" Column="4" />
+      <File FileName="Assets\Tank\Scripts\RocketController.js" Line="26" Column="49" />
+      <File FileName="Assets\Tank\Scripts\TankCamera.js" Line="104" Column="23" />
+      <File FileName="Assets\Tank\Scripts\EffectCache.js" Line="45" Column="34" />
+      <File FileName="Assets\Tank\Scripts\Armor.js" Line="16" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

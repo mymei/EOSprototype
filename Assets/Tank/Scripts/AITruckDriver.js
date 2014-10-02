@@ -64,8 +64,8 @@ function Update () {
 				path.ClearCorners();
 				
 				if (currentGoal == goals.Length) {
-//					currentGoal = 0;
-					transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
+					currentGoal = 0;
+//					transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
 				}
 			}
 		} else {						
