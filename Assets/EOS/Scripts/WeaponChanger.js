@@ -21,7 +21,7 @@ function Start () {
 		}
 	}
 	if (magazineList != null && magazineList.Length > 0) {
-		ChangeMagazine(magazineList[0]);	
+		ChangeMagazine(magazineList[0] as Magazine);	
 	}
 }
 
@@ -52,7 +52,7 @@ function SetEye(eye:Transform) {
 		}
 	}
 	if (magazineList != null && magazineList.Length > 0) {
-		ChangeMagazine(magazineList[0]);	
+		ChangeMagazine(magazineList[0] as Magazine);	
 	}
 }
 

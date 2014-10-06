@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-var goals:Transform[];
+var goals = new Array();
 
 private var mesh:NavMesh;
 private var currentGoal:int;
@@ -26,15 +26,15 @@ function Awake() {
 
 private var pathInvalidated = false;
 function Update () {
-	if (currentGoal < goals.Length) {
+	if (currentGoal < goals.length) {
 		if (path == null) {
 			path = new NavMeshPath();
 		}
 	
 		if (path.corners.Length == 0) {
-			mesh.CalculatePath(transform.position, goals[currentGoal].position, -1, path);
+			mesh.CalculatePath(transform.position, (goals[currentGoal] as Transform).position, -1, path);
 			if (path.status == NavMeshPathStatus.PathInvalid || path.corners.Length < 2) {
-				currentGoal = goals.Length;
+				currentGoal = goals.length;
 				return;
 			} else {
 				currentPathNode = 1;
@@ -63,9 +63,9 @@ function Update () {
 				currentGoal++;
 				path.ClearCorners();
 				
-				if (currentGoal == goals.Length) {
-					currentGoal = 0;
-//					transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
+				if (currentGoal == goals.length) {
+//					currentGoal = 0;
+					transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
 				}
 			}
 		} else {						
@@ -79,6 +79,10 @@ function Update () {
 			}
 		}
 	}
+}
+
+function AddGoal(goal:Transform) {
+	goals.Push(goal);
 }
 
 function IsArrived(direction:Vector3) : boolean {

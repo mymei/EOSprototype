@@ -46,8 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\EOS\Scripts\AIBehavior.js" />
+     <Compile Include="Assets\EOS\Scripts\AIRoutingBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AITankDriver.js" />
      <Compile Include="Assets\EOS\Scripts\AITruckDriver.js" />
+     <Compile Include="Assets\EOS\Scripts\AreaTrigger.js" />
      <Compile Include="Assets\EOS\Scripts\Armor.js" />
      <Compile Include="Assets\EOS\Scripts\BulletController.js" />
      <Compile Include="Assets\EOS\Scripts\EffectCache.js" />

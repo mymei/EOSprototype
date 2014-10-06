@@ -1,26 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tank\Scripts\TurretController.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\AITempBehavior.js">
     <Files>
-      <File FileName="EOSprototype.sln" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\WeaponChanger.js" Line="42" Column="33" />
-      <File FileName="Assets\Tank\Scripts\TurretController.js" Line="45" Column="29" />
-      <File FileName="Assets\Tank\Scripts\PlayerTurretGunner.js" Line="35" Column="1" />
-      <File FileName="Assets\Tank\Scripts\Magazine.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\TankController.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\AITankDriver.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\TruckController.js" Line="1" Column="1" />
       <File FileName="E:\Unity\Project\Assets\Scripts\JavaScripts\Car.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\AITruckDriver.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\RocketController.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\TankCamera.js" Line="128" Column="22" />
-      <File FileName="Assets\Tank\Scripts\EffectCache.js" Line="59" Column="15" />
-      <File FileName="Assets\Tank\Scripts\Armor.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Shaders\TestShader.shader" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\PlayerVehicleDriver.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\BulletController.js" Line="1" Column="1" />
-      <File FileName="Assets\Tank\Scripts\HelicopterController.js" Line="57" Column="22" />
-      <File FileName="Assets\Tank\Scripts\PlayerHelicopterDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\WeaponChanger.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AreaTrigger.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AIBehavior.js" Line="15" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AITankDriver.js" Line="61" Column="30" />
+      <File FileName="Assets\EOS\Scripts\EffectCache.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AITempBehavior.js" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
