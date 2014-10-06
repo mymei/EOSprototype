@@ -57,8 +57,8 @@ function GetInput(input:float[])
 	throttle = input[0];
 	targetFrontSteer = input[1];
 	targetSideSteer = input[2];
-	frontSteer = Mathf.SmoothDamp(frontSteer, targetFrontSteer, frontSteerVel, responsiveness);
-	sideSteer = Mathf.SmoothDamp(sideSteer, targetFrontSteer==0?0:targetSideSteer, sideSteerVel, responsiveness);
+	frontSteer = Mathf.SmoothDamp(frontSteer, targetFrontSteer, frontSteerVel, responsiveness, 1);
+	sideSteer = Mathf.SmoothDamp(sideSteer, targetFrontSteer==0?0:targetSideSteer, sideSteerVel, responsiveness, 1);
 }
 
 function UpdateRotorGraphics(relativeVelocity : Vector3)
@@ -111,9 +111,9 @@ function ApplyThrottle(relativeVelocity : Vector3)
 	var	tmpAxis = -frontSteer * forwardVec - sideSteer * rightVec;
 	tmpAxis = tmpAxis.magnitude > 1?tmpAxis.normalized:tmpAxis;
 		
-	var forwardSpeed = Vector3.Dot(forwardVec, Mathf.Sqrt(topSpeed * topSpeed - currentVerticalSpeed * currentVerticalSpeed) * tmpAxis);
+	var forwardSpeed = Vector3.Dot(forwardVec, topSpeed * tmpAxis);
 	var currentForwardSpeed = Vector3.Dot(forwardVec, rigidbody.velocity);
-	var rightSpeed = Vector3.Dot(rightVec, Mathf.Sqrt(topSpeed * topSpeed - currentVerticalSpeed * currentVerticalSpeed) * tmpAxis);
+	var rightSpeed = Vector3.Dot(rightVec, topSpeed * tmpAxis);
 	var currentRightSpeed = Vector3.Dot(rightVec, rigidbody.velocity);	
 		
 	var e = forwardSpeed - currentForwardSpeed;
@@ -123,7 +123,7 @@ function ApplyThrottle(relativeVelocity : Vector3)
 	upForce = rigidbody.mass * Physics.gravity * -1 * (1 + 0.1 * (verticalSpeed - currentVerticalSpeed));
 	e1 = e;
 		
-	rotorAxis = -forwardForce - upForce - rightForce;
+	rotorAxis = -forwardForce - rightForce + rigidbody.mass * Physics.gravity;
 	
 //	Debug.Log(rotorAxis);	
 //	rigidbody.AddForce(upForce.magnitude / rotorAxis.y * rotorAxis.magnitude * rotorAxis.normalized);	
@@ -133,6 +133,7 @@ function ApplyThrottle(relativeVelocity : Vector3)
 	rigidbody.AddForce(rightForce);
 //	rigidbody.AddForce(rigidbody.mass * Physics.gravity.magnitude * (1 + 0.5 * throttle) * (rigidbody.rotation * -rotorAxis.normalized));
 	rigidbody.MoveRotation(rigidbody.rotation * Quaternion.AngleAxis((targetFrontSteer == 0?tailRotor:10) * targetSideSteer * Time.deltaTime, Vector3.up));
+	rigidbody.angularVelocity = Vector3.zero;
 }
 
 function ApplySteering(relativeVelocity : Vector3)

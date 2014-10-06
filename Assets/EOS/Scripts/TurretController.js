@@ -42,6 +42,7 @@ function lockOn(target:Transform) {
 	} else {
 		SetTarget(target == aimTarget?null:target);
 	}
+	return aimTarget == transform?null:aimTarget;
 }
 
 function isAiming() : boolean {
@@ -95,17 +96,19 @@ function Update () {
 		
 		var currentTargetPos = transform.position + gun.forward * 500;
 		if(Physics.Raycast(transform.position, gun.forward, hit, 500, ~LayerMask.GetMask("projectile"))) {
-			currentTargetPos = hit.point;
+			if (hit.collider.transform.root.GetComponentInChildren(TurretController) != this) {
+				currentTargetPos = hit.point;			
+			}
 		}
 		actualTargetPos = Vector3.Lerp(actualTargetPos, currentTargetPos, 0.8);	
 		
 		if (dummyTarget != null) {
 			dummyTarget.transform.position = aimTarget.position;
 			dummyTarget.transform.rotation = aimTarget.rotation;
-			dummyTarget.transform.position += aimTarget.parent.rigidbody.velocity * 0.5;
-			dummyTarget.transform.rotation *= Quaternion.AngleAxis(aimTarget.parent.rigidbody.angularVelocity.magnitude * Mathf.Rad2Deg * 0.5, aimTarget.parent.rigidbody.angularVelocity.normalized);
+			dummyTarget.transform.position += aimTarget.root.rigidbody.velocity * 0.5;
+			dummyTarget.transform.rotation *= Quaternion.AngleAxis(aimTarget.root.rigidbody.angularVelocity.magnitude * Mathf.Rad2Deg * 0.5, aimTarget.root.rigidbody.angularVelocity.normalized);
 			
-			aimTarget.parent.rigidbody.angularVelocity * 0.5;
+			aimTarget.root.rigidbody.angularVelocity * 0.5;
 		}
 	}
 }

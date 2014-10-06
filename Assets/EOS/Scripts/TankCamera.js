@@ -78,7 +78,7 @@ function LateUpdate()
 		ZoomCamera(zoomLevel);
 	} else {		
 		newPosition = newTargetPosition - (GetDirection() * distance);
-		if(Physics.Raycast(newTargetPosition, (newPosition - newTargetPosition).normalized, hit, distance, ~target.gameObject.layer))
+		if(Physics.Raycast(newTargetPosition, (newPosition - newTargetPosition).normalized, hit, distance, ~(1 << target.gameObject.layer)))
 			newPosition = hit.point;
 		SetFOV(defaultFOV);	
 	}
@@ -123,12 +123,14 @@ function setTargetVisibility(flag:boolean) {
 }
 
 function SetTarget(newTarget:Transform) {
-	setTargetVisibility(true);
-	target = newTarget;
+	if (target != newTarget) {
+		setTargetVisibility(true);
+		target = newTarget;
+	}
 }
 
 function SetAim(newAim:Transform) {
-	aim = newAim == transform || newAim == aim?null:newAim;
+	aim = newAim == transform?null:newAim;
 }
 
 //var mat:Material;

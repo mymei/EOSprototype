@@ -14,8 +14,10 @@ function Update () {
 	turretController.enabled = IsControllable();
 	if (IsControllable()) {
 		var goal = gunnerEye.position + (gunnerEye.forward * 500);
-		if (Physics.Raycast(gunnerEye.position, gunnerEye.forward, hit, 500, ~gameObject.layer)) {
-			goal = hit.point;			
+		if (Physics.Raycast(gunnerEye.position, gunnerEye.forward, hit, 500)) {
+			if (hit.collider.transform.root.GetComponentInChildren(PlayerTurretGunner) != this) {
+				goal = hit.point;			
+			}
 		}
 		turretController.AimControl(goal);	
 		
@@ -36,12 +38,12 @@ function HandleInput() {
 		if (Input.GetButtonDown("Fire1")) {
 			turretController.Fire();
 		} else if (Input.GetButtonDown("Fire2")) {
-			if (hit.collider != null && 1 << hit.collider.gameObject.layer == LayerMask.GetMask("vehicle")) {
-				turretController.lockOn(hit.collider.transform);
-				gunnerEye.SendMessage("SetAim", hit.collider.transform, SendMessageOptions.DontRequireReceiver);
+			if (hit.collider != null && 1 << hit.collider.gameObject.layer == LayerMask.GetMask("vehicle") && hit.collider.transform.root.GetComponentInChildren(PlayerTurretGunner) != this) {
+				var tmp = turretController.lockOn(hit.collider.transform);
+				gunnerEye.SendMessage("SetAim", tmp == null?gunnerEye:tmp, SendMessageOptions.DontRequireReceiver);
 			} else {
-				gunnerEye.SendMessage("SetAim", gunnerEye, SendMessageOptions.DontRequireReceiver);
 				turretController.lockOn(null);
+				gunnerEye.SendMessage("SetAim", gunnerEye, SendMessageOptions.DontRequireReceiver);
 			}
 		}	
 		

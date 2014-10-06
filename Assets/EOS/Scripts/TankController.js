@@ -2,19 +2,18 @@
 
 var suspensionRange : float = 0.1;
 var suspensionDamper : float = 50;
-var suspensionSpringFront : float = 18500;
-var suspensionSpringRear : float = 9000;
+var suspensionSpring : float = 18500;
 
 var throttle : float = 0; 
 private var steer : float = 0;
 
 var centerOfMass : Transform;
 
-var frontWheels : Transform[];
-var rearWheels : Transform[];
+var leftWheels : Transform[];
+var rightWheels : Transform[];
 
 private var wheels : CaterpillarWheel[];
-wheels = new CaterpillarWheel[frontWheels.Length + rearWheels.Length];
+wheels = new CaterpillarWheel[leftWheels.Length + rightWheels.Length];
 
 private var wfc : WheelFrictionCurve;
 
@@ -41,6 +40,7 @@ class CaterpillarWheel
 	var lastEmitTime : float = Time.time;
 	var wheelVelo : Vector3 = Vector3.zero;
 	var groundSpeed : Vector3 = Vector3.zero;
+	var isLeft : boolean = false;
 }
 
 function Start()
@@ -81,13 +81,13 @@ function SetupWheelColliders()
 		
 	var wheelCount : int = 0;
 	
-	for (var t : Transform in frontWheels)
+	for (var t : Transform in leftWheels)
 	{
 		wheels[wheelCount] = SetupWheel(t, true);
 		wheelCount++;
 	}
 	
-	for (var t : Transform in rearWheels)
+	for (var t : Transform in rightWheels)
 	{
 		wheels[wheelCount] = SetupWheel(t, false);
 		wheelCount++;
@@ -104,7 +104,7 @@ function SetupWheelFrictionCurve()
 	wfc.stiffness = 1;
 }
 
-function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
+function SetupWheel(wheelTransform : Transform, isLeft:boolean)
 {
 	var go : GameObject = new GameObject(wheelTransform.name + " Collider");
 	go.transform.position = wheelTransform.position;
@@ -115,10 +115,7 @@ function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
 	wc.suspensionDistance = suspensionRange;
 	var js : JointSpring = wc.suspensionSpring;
 	
-	if (isFrontWheel)
-		js.spring = suspensionSpringFront;
-	else
-		js.spring = suspensionSpringRear;
+	js.spring = suspensionSpring;
 		
 	js.damper = suspensionDamper;
 	wc.suspensionSpring = js;
@@ -143,6 +140,7 @@ function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
 		}
 	}
 	wheel.collider.radius = wheelRadius;
+	wheel.isLeft = isLeft;
 		
 	return wheel;
 }
@@ -211,12 +209,12 @@ function ApplyThrottle(relativeVelocity : Vector3)
 		var w = wheels[index];
 //		var multiplier = Mathf.Clamp(throttle + (ArrayUtility.IndexOf(wheels, w) % 2 == 0?1:-1) * steer, -1, 1);
 		var flag = HaveTheSameSign(relativeVelocity.z, throttle) || Mathf.Abs(relativeVelocity.z) < 1;
-		var multiplier = (throttle + (index % 2 == 0?1:-1) * steer * (throttle >= 0?1:-1)) * 0.5; 
+		var multiplier = (throttle + (w.isLeft?1:-1) * steer * (throttle >= 0?1:-1)) * 0.5; 
 		
 		w.collider.motorTorque = flag?multiplier * Mathf.Sign(motorTorque) * (getMotorTorque(Mathf.Max(Mathf.Abs(motorTorque) - defaultTorque, 0), w.collider.rpm) + defaultTorque):0;
 		w.collider.brakeTorque = (!flag?(brakeTorque - defaultTorque) * Mathf.Abs(throttle):0) + defaultTorque;
 	}	
-	rpmMonitor = wheels[0].collider.rpm;
+	rpmMonitor = wheels.Length > 0?wheels[0].collider.rpm:0;
 }
 
 /**************************************************/

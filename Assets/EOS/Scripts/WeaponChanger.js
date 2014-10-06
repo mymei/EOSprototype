@@ -6,7 +6,23 @@ private var magazineList:Component[];
 private var gunnerEye:Transform;
 
 function Start () {
-	magazineList = transform.GetComponentsInChildren(Magazine);	
+	magazineList = transform.GetComponentsInChildren(Magazine);
+
+	for (var i = 0; i < magazineList.length; i ++) {
+		var magazine = magazineList[i] as Magazine;		
+		for (var turret:Transform in turretList) {
+			if (turret != null) {
+				var turretController = turret.GetComponent(TurretController);
+				if (turretController.GetMagazine() == null && magazine.bullet.CompareTag(turretController.weaponTag)) {
+					turretController.Reload(magazine);
+					break;
+				}
+			}
+		}
+	}
+	if (magazineList != null && magazineList.Length > 0) {
+		ChangeMagazine(magazineList[0]);	
+	}
 }
 
 function Update () {
@@ -22,6 +38,8 @@ function ResetAllSafetySwitch() {
 	for (var turret:Transform in turretList) {
 		if (turret != null) {
 			turret.GetComponent(TurretController).SetSafetySwitch(true);
+			turret.GetComponent(TurretController).lockOn(null);
+			gunnerEye.SendMessage("SetAim", gunnerEye, SendMessageOptions.DontRequireReceiver);
 		}
 	}
 }
@@ -33,21 +51,8 @@ function SetEye(eye:Transform) {
 			turret.SendMessage("SetEye", gunnerEye, SendMessageOptions.DontRequireReceiver);
 		}
 	}
-	for (var i = 0; i < magazineList.length; i ++) {
-		var magazine = magazineList[i] as Magazine;		
-		for (var turret:Transform in turretList) {
-			if (turret != null) {
-				var turretController = turret.GetComponent(TurretController);
-				if (turretController.GetMagazine() == null && magazine.bullet.CompareTag(turretController.weaponTag)) {
-					turretController.Reload(magazine);
-					if (i == 0) {									
-						gunnerEye.SendMessage("SetTarget", turret, SendMessageOptions.DontRequireReceiver); 
-						turretController.SetSafetySwitch(false);
-					}
-					break;
-				}
-			}
-		}
+	if (magazineList != null && magazineList.Length > 0) {
+		ChangeMagazine(magazineList[0]);	
 	}
 }
 
