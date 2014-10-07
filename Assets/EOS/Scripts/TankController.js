@@ -186,12 +186,29 @@ function UpdateWheelGraphics(relativeVelocity : Vector3)
 {
 	wheelCount = -1;
 	
+	var leftCaterpillar = 0;
+	var rightCaterpillar = 0;	
 	for(var w : CaterpillarWheel in wheels)
 	{
 		wheelCount++;
 		var wheel2 : WheelCollider = w.collider;
 		
-		w.tireGraphic.Rotate(Vector3.right * (wheel2.rpm / 60.0 * Time.deltaTime / wheelRadius * 460));
+		if (wheel2.isGrounded) {
+			if (w.isLeft) {
+				leftCaterpillar = Mathf.Abs(leftCaterpillar) > Mathf.Abs(wheel2.rpm)?leftCaterpillar:wheel2.rpm;
+			} else {
+				rightCaterpillar = Mathf.Abs(rightCaterpillar) > Mathf.Abs(wheel2.rpm)?rightCaterpillar:wheel2.rpm;
+			}
+		}
+	}
+	
+	for(var w : CaterpillarWheel in wheels)
+	{
+		if (w.isLeft) {
+			w.tireGraphic.Rotate(Vector3.right * (leftCaterpillar / 60.0 * Time.deltaTime / wheelRadius * 460));
+		} else {
+			w.tireGraphic.Rotate(Vector3.right * (rightCaterpillar / 60.0 * Time.deltaTime / wheelRadius * 460));
+		}
 	}
 }
 
