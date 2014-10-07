@@ -53,7 +53,7 @@ function HandleInput() {
 
 private var screenRect = new Rect(0, 0, Screen.width, Screen.height);
 function OnGUI() {
-	if (IsControllable() && turretController.IsSafetySwitchOff()) {
+	if (IsControllable() && turretController.IsSafetySwitchOff() && targetTexture) {
 		var screenPos = gunnerEye.camera.WorldToScreenPoint(turretController.GetTargetPos());
 		if (screenPos.z > 0) {
 			GUI.DrawTexture(Rect(screenPos.x - 32, (Screen.height - screenPos.y) - 32, 64, 64), targetTexture);

@@ -23,12 +23,12 @@ var topSpeed : float = 160;
 var resetTime : float = 5.0;
 private var resetTimer : float = 0.0;
 
-var forwardStiffness = 500;
-var sidewayStiffness = 100;
+var forwardStiffness = 10000;
+var sidewayStiffness = 10000;
 
-var motorTorque = 500;
-var brakeTorque = 500;
-var defaultTorque = 100;
+var motorTorque = 50;
+var brakeTorque = 50;
+var defaultTorque = 10;
 
 var maxRPM = 300;
 var maxTurn = 15;
@@ -46,6 +46,8 @@ class Wheel
 	var lastEmitTime : float = Time.time;
 	var wheelVelo : Vector3 = Vector3.zero;
 	var groundSpeed : Vector3 = Vector3.zero;
+	
+	var WheelDefaultPosition : Vector3;
 }
 
 function Start()
@@ -116,7 +118,7 @@ function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
 	var go : GameObject = new GameObject(wheelTransform.name + " Collider");
 	go.transform.position = wheelTransform.position;
 	go.transform.parent = transform;
-	go.transform.rotation = wheelTransform.rotation;
+	go.transform.localRotation = Quaternion.identity;
 		
 	var wc : WheelCollider = go.AddComponent(typeof(WheelCollider)) as WheelCollider;
 	wc.suspensionDistance = suspensionRange;
@@ -136,21 +138,26 @@ function SetupWheel(wheelTransform : Transform, isFrontWheel : boolean)
 	wc.sidewaysFriction.stiffness = sidewayStiffness;
 	wc.forwardFriction = wfc;
 	wc.forwardFriction.stiffness = forwardStiffness;
-	wheel.wheelGraphic = wheelTransform;
 	
-	var tmpTransforms = wheelTransform.GetComponentsInChildren(Transform);
-	wheel.tireGraphic = tmpTransforms[1] as Transform;
-	var wheelRadius = 0.0;
-	for(var tmpTransform : Component in tmpTransforms) {
-		if (tmpTransform == tmpTransforms[0]) {
-			continue;
-		}
-		if (!!tmpTransform.renderer) {
-			wheelRadius = tmpTransform.renderer.bounds.size.y / 2;	
-			break;		
-		}
+	go = new GameObject(wheelTransform.name + " Steer Column");
+	wheel.wheelGraphic = go.transform;
+	wheel.wheelGraphic.parent = wheelTransform.parent;
+	wheel.wheelGraphic.position = wheelTransform.position;
+	wheel.wheelGraphic.localRotation = Quaternion.identity;
+	
+	go = new GameObject(wheelTransform.name + " Axis");
+	wheel.tireGraphic = go.transform;
+	wheel.tireGraphic.parent = wheel.wheelGraphic;
+	wheel.tireGraphic.localPosition = Vector3.zero;
+	wheel.tireGraphic.localRotation = Quaternion.identity;
+	wheelTransform.parent = wheel.tireGraphic;
+	
+	wheel.WheelDefaultPosition = wheel.wheelGraphic.localPosition;
+	
+	var renderer = wheelTransform.GetComponentInChildren(Renderer);
+	if (renderer != null) {
+		wheel.collider.radius = renderer.bounds.size.y / 2;		
 	}
-	wheel.collider.radius = wheelRadius;
 	
 	if (isFrontWheel) {
 		wheel.steerWheel = true;
@@ -198,6 +205,18 @@ function FlipCar()
 	resetTimer = 0;
 }
 
+function CalcWheelPosition(wheel:Transform, col:WheelCollider, defaultPos:Vector3)
+{
+	var hit:WheelHit;
+	var lp = wheel.localPosition;
+	if(col.GetGroundHit(hit))
+	    lp.y -= Vector3.Dot(wheel.position - hit.point, transform.up) - col.radius;
+	else
+	    lp.y = defaultPos.y - col.suspensionDistance;
+
+	return lp;
+}
+
 var wheelCount : float;
 function UpdateWheelGraphics(relativeVelocity : Vector3)
 {
@@ -208,7 +227,9 @@ function UpdateWheelGraphics(relativeVelocity : Vector3)
 		wheelCount++;
 		var wheel2 : WheelCollider = w.collider;
 		
-		w.tireGraphic.Rotate(Vector3.right * (wheel2.rpm / 60.0 * Time.deltaTime / wheel2.radius * 460));
+		w.wheelGraphic.localPosition = CalcWheelPosition(w.wheelGraphic, w.collider, w.WheelDefaultPosition);
+		
+		w.tireGraphic.Rotate(Vector3.right * (wheel2.rpm / 60.0 * Time.deltaTime / wheel2.radius * 360));
 		
 		if (w.steerWheel) {
 			w.wheelGraphic.localEulerAngles.y = steer * maxTurn;

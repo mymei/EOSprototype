@@ -1,20 +1,55 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\AITempBehavior.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TruckController.js">
     <Files>
-      <File FileName="E:\Unity\Project\Assets\Scripts\JavaScripts\Car.js" Line="1" Column="1" />
+      <File FileName="E:\Unity\Project\Assets\Scripts\JavaScripts\Car.js" Line="181" Column="26" />
       <File FileName="Assets\EOS\Scripts\WeaponChanger.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\TankController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\AreaTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\AIBehavior.js" Line="15" Column="1" />
-      <File FileName="Assets\EOS\Scripts\AITankDriver.js" Line="61" Column="30" />
+      <File FileName="Assets\EOS\Scripts\AIBehavior.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AITankDriver.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\EffectCache.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\AITempBehavior.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AIRoutingBehavior.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AITruckDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AIVehicleDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\T90TankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="11" Column="26" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="32" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="145" Column="57" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="EOS" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="VehicleController" expanded="True" />
+                <Node name="TruckController.js" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>hit</Value>
+          <Value>magazine</Value>
+          <Value>magazineList</Value>
+          <Value>gun</Value>
+          <Value>wheels</Value>
+          <Value>wheelTransform.localEulerAngles</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\mymei\Documents\GitHub\EOSprototype\Assets\EOS\Scripts\TruckController.js" line="169" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

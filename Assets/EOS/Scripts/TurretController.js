@@ -33,7 +33,7 @@ private var dummyTarget:GameObject;
 function AimControl(targetPos:Vector3) {
 	aimPos = targetPos;
 	SetTarget(aimTarget==null?transform:aimTarget);
-	gun = transform.Find("Joint");
+	gun = transform.GetComponentsInChildren(Transform)[1] as Transform;	
 }
 
 function lockOn(target:Transform) {
@@ -78,8 +78,6 @@ function Update () {
 	if (isAiming()) {
 		var _aimPos = getAimPos();
 
-		var gunTransform = gun.transform;
-
 		var tmpPos:Vector3 = transform.parent.InverseTransformPoint(_aimPos);
 		
 		var lookRotation = Quaternion.LookRotation(tmpPos - transform.localPosition);
@@ -91,6 +89,7 @@ function Update () {
 		tmp = tmp > 180?Mathf.Max(360 - elevation, tmp):tmp;
 		tmp = tmp <= 180?Mathf.Min(-depression, tmp):tmp;	
 		
+		var gunTransform = gun.transform;
 		gunTransform.localRotation.eulerAngles.x = 
 		Mathf.MoveTowardsAngle(gunTransform.localRotation.eulerAngles.x, tmp + euler.x, Time.deltaTime * elevationSpeed); 	
 		
@@ -156,7 +155,7 @@ function IsSafetySwitchOff():boolean {
 }
 
 function OnGUI() {
-	if (IsSafetySwitchOff() && magazine != null) {
+	if (IsSafetySwitchOff() && magazine != null && gauge != null) {
 		var tmp = magazine.GetAmmoLeft() == 0?1:Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
 		GUI.DrawTexture(Rect(10, Screen.height - gauge.height - 10, gauge.width * (1 - tmp), gauge.height), gauge);
 		GUI.Label(Rect(10, Screen.height - 50, 100, 20), "" + magazine.GetAmmoLeft());
