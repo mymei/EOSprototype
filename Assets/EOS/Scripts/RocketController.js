@@ -11,7 +11,14 @@ private var tr : Transform;
 var velocity : Vector3;
 private var accel_vector : Vector3;
 
+private var rocketRadius:float;
+private var rocketLength:float;
 function Start () {	
+	var renderer = GetComponentInChildren(Renderer);
+	if (renderer != null) {
+		rocketRadius = renderer.bounds.size.y / 2;
+		rocketLength = renderer.bounds.size.z / 2;		
+	}
 }
 
 function GetAcceleration():Vector3 {
@@ -22,19 +29,21 @@ function Update () {
 	    
 	var newDir = Vector3.RotateTowards(tr.forward, accel_vector.normalized, 5 * Time.deltaTime, 0.0);
 	tr.rotation = Quaternion.LookRotation(newDir);
+	
+	var formerPos = tr.position;
 
 	velocity += GetAcceleration() * Time.deltaTime;
 	tr.position += velocity * Time.deltaTime;
 	dist -= velocity.magnitude * Time.deltaTime;
 	
 	var collided : boolean = false;
-	var hits : Collider[] = Physics.OverlapSphere (tr.position, 1, -1);
-	for (var c : Collider in hits) {
-		// Don't collide with triggers
-		if (c.isTrigger)
-			continue;
-		if (1 << c.gameObject.layer == LayerMask.GetMask("vehicle")) {
-			var com = c.GetComponent("Armor") as Armor;
+	
+	var hits =
+		Physics.CapsuleCastAll(formerPos - rocketLength * tr.forward, formerPos + rocketLength * tr.forward, rocketRadius, velocity.normalized, velocity.magnitude * Time.deltaTime);
+	
+	for (var hit : RaycastHit in hits) {
+		if (1 << hit.collider.gameObject.layer == LayerMask.GetMask("vehicle")) {
+			var com = hit.collider.GetComponent("Armor") as Armor;
 			if (com != null && com.GetOwner() != owner) {
 			} else {
 				continue;
@@ -42,6 +51,7 @@ function Update () {
 		}
 		collided = true;
 	}
+	
 	if (Time.time > spawnTime + lifeTime || dist < 0) {
 		collided = true;
 	}

@@ -132,7 +132,16 @@ function ApplyThrottle(relativeVelocity : Vector3)
 	rigidbody.AddForce(forwardForce);
 	rigidbody.AddForce(rightForce);
 //	rigidbody.AddForce(rigidbody.mass * Physics.gravity.magnitude * (1 + 0.5 * throttle) * (rigidbody.rotation * -rotorAxis.normalized));
-	rigidbody.MoveRotation(rigidbody.rotation * Quaternion.AngleAxis((targetFrontSteer == 0?tailRotor:10) * targetSideSteer * Time.deltaTime, Vector3.up));
+	
+	if (targetFrontSteer == 0) {
+		rigidbody.MoveRotation(rigidbody.rotation * Quaternion.AngleAxis(tailRotor * targetSideSteer * Time.deltaTime, Vector3.up));
+	} else {
+		var displacement = rigidbody.velocity;
+		displacement.y = 0.0;
+		if (displacement.magnitude > 0) {
+			rigidbody.MoveRotation(Quaternion.RotateTowards(rigidbody.rotation, Quaternion.LookRotation(-displacement), 10 * Time.deltaTime));
+		}	
+	}
 	rigidbody.angularVelocity = Vector3.zero;
 }
 

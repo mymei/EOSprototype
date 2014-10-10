@@ -1,5 +1,10 @@
 ﻿#pragma strict
 
+var gun:Transform;
+var muzzles:Transform[];
+var chainShot:int = 1;
+var chainInterval:float = 0.0;
+
 var turretTraverse : float = 30;
 var elevationSpeed : float = 30;
 
@@ -14,7 +19,6 @@ var ignoreLayers:LayerMask = -1;
 var CoolDown:float = 1.0;
 
 var weaponTag:String;
-var launchPos:Vector3;
 
 var gauge:Texture;
 
@@ -24,7 +28,6 @@ private var hit:RaycastHit = new RaycastHit();
 private var raycastLayers:LayerMask = -1;
 
 private var actualTargetPos:Vector3;
-private var gun:Transform;
 private var magazine:Magazine;
 private var euler:Vector3;
 
@@ -33,7 +36,7 @@ private var dummyTarget:GameObject;
 function AimControl(targetPos:Vector3) {
 	aimPos = targetPos;
 	SetTarget(aimTarget==null?transform:aimTarget);
-	gun = transform.GetComponentsInChildren(Transform)[1] as Transform;	
+	gun = gun==null?transform.GetComponentsInChildren(Transform)[1] as Transform:gun;	
 }
 
 function lockOn(target:Transform) {
@@ -77,10 +80,9 @@ private var tmpTest = 0.0;
 function Update () {
 	if (isAiming()) {
 		var _aimPos = getAimPos();
-
-		var tmpPos:Vector3 = transform.parent.InverseTransformPoint(_aimPos);
 		
-		var lookRotation = Quaternion.LookRotation(tmpPos - transform.localPosition);
+		var tmpDir:Vector3 = transform.parent.InverseTransformDirection(_aimPos - transform.position);
+		var lookRotation = Quaternion.LookRotation(tmpDir);
 		
 //		transform.localRotation.eulerAngles.y = Mathf.SmoothDampAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y, tmpTest, 0.1, turretTraverse);
 		transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y + euler.y, turretTraverse * Time.deltaTime);
@@ -129,7 +131,15 @@ function Fire() {
 		if (magazine.GetAmmoLeft() > 0) {
 			if (CoolDown < Time.time - LastFireTime) {
 				LastFireTime = Time.time;
-				magazine.Fire(gun.position + gun.TransformDirection(launchPos), gun.rotation);
+				var tmpPos = gun.position;
+				if (muzzles.Length > 0) {
+					tmpPos = Vector3.zero;
+					for (var tr in muzzles) {
+						tmpPos += tr.position;
+					}
+					tmpPos /= muzzles.Length;
+				}
+				magazine.Fire(tmpPos, gun.rotation, chainShot, chainInterval, muzzles);
 			}
 		}
 	}
