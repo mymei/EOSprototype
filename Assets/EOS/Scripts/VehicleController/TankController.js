@@ -34,6 +34,7 @@ class TankController extends MonoBehaviour {
 	private var wfc : WheelFrictionCurve;
 
 	var topSpeed : float = 160;
+	var Speed : float;
 
 	var resetTime : float = 5.0;
 	private var resetTimer : float = 0.0;
@@ -64,6 +65,9 @@ class TankController extends MonoBehaviour {
 
 	function Update()
 	{
+		Speed = rigidbody.velocity.magnitude * 3600 / 1000;
+		UpdateFriction();
+		
 		var relativeVelocity : Vector3 = transform.InverseTransformDirection(rigidbody.velocity);
 		
 		Check_If_Car_Is_Flipped();
@@ -92,6 +96,15 @@ class TankController extends MonoBehaviour {
 		for(i = 0; i < rightWheels.Length; i++) {
 			wheels[wheelCount] = SetupWheel(rightWheels[i], false);
 			wheelCount++;
+		}
+	}
+	
+	function UpdateFriction() {
+		for(var w : CaterpillarWheel in wheels)
+		{
+			var wc : WheelCollider = w.collider;
+			wc.sidewaysFriction.stiffness = sidewayStiffness;
+			wc.forwardFriction.stiffness = forwardStiffness;
 		}
 	}
 
@@ -130,7 +143,7 @@ class TankController extends MonoBehaviour {
 		
 		var renderer = wheelTransform.GetComponentInChildren(Renderer);
 		if (renderer != null) {
-			wheel.collider.radius = renderer.bounds.size.y / 2;		
+			wheel.collider.radius = renderer.bounds.size.y / 2 + 0.05;		
 		}
 		
 		wheel.wheelGraphic = wheelTransform;
@@ -231,9 +244,12 @@ class TankController extends MonoBehaviour {
 
 	function getMotorTorque(torque:float, rpm:float) {
 
+		return torque;
 		return (maxRPM - Mathf.Min(maxRPM, Mathf.Abs(rpm))) / maxRPM * torque;
 	}
 
+	var leftTorque:float;
+	var rightTorque:float;
 	function ApplyThrottle(relativeVelocity : Vector3)
 	{
 		for(var index = 0; index < wheels.length; index++)
@@ -241,12 +257,14 @@ class TankController extends MonoBehaviour {
 			var w = wheels[index];
 	//		var multiplier = Mathf.Clamp(throttle + (ArrayUtility.IndexOf(wheels, w) % 2 == 0?1:-1) * steer, -1, 1);
 			var flag = HaveTheSameSign(relativeVelocity.z, throttle) || Mathf.Abs(relativeVelocity.z) < 1;
-			var multiplier = (throttle + (w.isLeft?1:-1) * steer * (throttle >= 0?1:-1)) * 0.5; 
+			var multiplier = Mathf.Max(-1.0, Mathf.Min(1.0, (throttle + (w.isLeft?1:-1) * steer * (throttle >= 0?1:-1)))); 
 			
 			w.collider.motorTorque = flag?multiplier * Mathf.Sign(motorTorque) * (getMotorTorque(Mathf.Max(Mathf.Abs(motorTorque) - defaultTorque, 0), w.collider.rpm) + defaultTorque):0;
 			w.collider.brakeTorque = (!flag?(brakeTorque - defaultTorque) * Mathf.Abs(throttle):0) + defaultTorque;
 		}	
 		rpmMonitor = wheels.Length > 0?wheels[0].collider.rpm:0;
+		leftTorque = wheels[0].collider.motorTorque;
+		rightTorque = wheels[wheels.Length / 2].collider.motorTorque;
 	}
 
 	function HaveTheSameSign(first : float, second : float) : boolean
