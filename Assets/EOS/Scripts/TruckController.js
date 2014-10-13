@@ -229,8 +229,10 @@ function UpdateWheelGraphics(relativeVelocity : Vector3)
 		
 		w.wheelGraphic.localPosition = CalcWheelPosition(w.wheelGraphic, w.collider, w.WheelDefaultPosition);
 		
-		w.tireGraphic.Rotate(Vector3.right * (wheel2.rpm / 60.0 * Time.deltaTime / wheel2.radius * 360));
-		
+		var test = w.tireGraphic.parent.InverseTransformDirection(transform.right);
+		test.z = 0;		
+		w.tireGraphic.Rotate(test.normalized * (wheel2.rpm / 60.0 * Time.deltaTime / wheel2.radius * 360));
+	
 		if (w.steerWheel) {
 			w.wheelGraphic.localEulerAngles.y = steer * maxTurn;
 		}
