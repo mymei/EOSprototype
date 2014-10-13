@@ -245,7 +245,7 @@ class TankController extends MonoBehaviour {
 	function getMotorTorque(torque:float, rpm:float) {
 
 		return torque;
-		return (maxRPM - Mathf.Min(maxRPM, Mathf.Abs(rpm))) / maxRPM * torque;
+//		return (maxRPM - Mathf.Min(maxRPM, Mathf.Abs(rpm))) / maxRPM * torque;
 	}
 
 	var leftTorque:float;

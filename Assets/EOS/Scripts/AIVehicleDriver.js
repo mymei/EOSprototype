@@ -3,6 +3,7 @@
 class AIVehicleDriver extends MonoBehaviour {
 
 	var goals = new Array();
+	var obstacles = new Array();
 	
 	var radiusForArrival = 5;
 
@@ -13,6 +14,8 @@ class AIVehicleDriver extends MonoBehaviour {
 	protected var path: NavMeshPath;
 
 	function Start () {
+		var tmpCamera = FindObjectOfType(TankCamera) as TankCamera;
+		AddObstacle(tmpCamera.target.transform);				
 	}
 
 	function ClearGoals() {
@@ -23,7 +26,180 @@ class AIVehicleDriver extends MonoBehaviour {
 		goals.Push(goal);
 	}
 
-	function IsArrived(direction:Vector3) : boolean {
+	function IsArrived(pos:Vector3) : boolean {
+		var direction = pos - transform.position;
+		direction.y = 0;
 		return direction.magnitude < radiusForArrival;
+	}
+	
+	function AddObstacle(obstacle:Transform) {
+		obstacles.Push(obstacle);
+	}
+	
+	private var localGoalPos:Vector3;
+	private var currentDirection:Vector3;
+	private var pathInvalidated = false;
+	function Update () {
+		if (currentGoal < goals.length) {
+			if (path == null) {
+				path = new NavMeshPath();
+			}
+			
+			if (path.corners.Length == 0) {
+				mesh.CalculatePath(transform.position, (goals[currentGoal] as Transform).position, -1, path);
+				if (path.status == NavMeshPathStatus.PathInvalid || path.corners.Length < 2) {
+					currentGoal = goals.length;
+					return;
+				} else {
+					currentPathNode = 1;
+				}
+			}
+			
+			localGoalPos = GetLocalGoal();	
+			currentDirection = localGoalPos - transform.position;
+			currentDirection.y = 0;
+				
+			var tmpSeg = rigidbody.velocity.normalized * 20;
+			for (var obj in obstacles) {
+				var dist = GetDistanceFromObstacle(obj as Transform, transform.position, transform.position + tmpSeg, 1);
+				if (dist != -1.0) {
+					transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
+					return;			
+				}						
+			}
+			
+			ControlVehicle(localGoalPos);
+			
+			if (IsArrived(localGoalPos)) {
+				currentPathNode ++;
+				if (currentPathNode == path.corners.Length) {
+					currentGoal++;
+					path.ClearCorners();
+					
+					if (currentGoal == goals.length) {
+						transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
+					}
+				}
+			} else {
+				if (Vector3.Dot(transform.forward, currentDirection) > 0) {
+					if (pathInvalidated) {
+						pathInvalidated = false;
+						path.ClearCorners();
+					}
+				} else {
+					pathInvalidated = true;
+				}
+			}
+		}
+	}
+	
+	function ControlVehicle(goal:Vector3) {
+	
+	}
+	
+	function GetClosestObstacle() {
+//		var builtInObstacles = obstacles.ToBuiltin(Bounds);
+//		var direction = GetLocalGoal() - transform.position;
+//
+//		for (var obstacle in builtInObstacles) {
+//				
+//		}			
+	}
+	
+	function GetDistanceFromDisp(pos:Vector3, from:Vector3, to:Vector3) {
+		var disp = pos - from;
+		var dir = (to - from).normalized;
+		return Vector3.Dot(disp, dir);
+	}
+	
+	function GetDistanceFromPos(pos:Vector3, from:Vector3, to:Vector3) {
+		var disp = pos - from;
+		var dir = (to - from).normalized;
+		var projectedDist = Vector3.Dot(disp, dir);
+		var closestPos = from + dir * projectedDist;
+		return (pos - closestPos).magnitude;	
+	}
+	
+	function GetClosestPointOnObstacle(bounds:Bounds, from:Vector3, to:Vector3) {
+		var disp = bounds.center - from;
+		var dir = (to - from).normalized;
+		var projectedDist = Vector3.Dot(disp, dir);
+		var closestPos = from + dir * projectedDist;
+		var normalVect = (bounds.center - closestPos).normalized;
+		return bounds.center - (Mathf.Abs(Vector3.Dot(normalVect, bounds.extents)) * normalVect + Mathf.Abs(Vector3.Dot(dir, bounds.extents)) * dir);
+	}
+	
+	function GetClosestDistFromObstacle(center:Vector3, radius:float, from:Vector3, to:Vector3) {
+		var disp = center - from;
+		var dir = (to - from).normalized;
+		var projectedDist = Vector3.Dot(disp, dir);
+		var closestPos = from + dir * projectedDist;
+		
+		var normalDist = (center- closestPos).magnitude;
+		if (normalDist < radius) {
+			return projectedDist - Mathf.Asin(normalDist/radius);					
+		} else {
+			return -1;		
+		}
+	}
+	
+	function GetDistanceFromObstacle(tr:Transform, from:Vector3, to:Vector3, radius:float) {
+		from.y = 0;
+		to.y = 0;
+	
+		var colliders = tr.GetComponentsInChildren(Collider);
+		var minimum = (to - from).magnitude;
+		var defaultMin = minimum;
+		for (var i = 0; i < colliders.length; i ++) {
+			if (colliders[i] as WheelCollider)
+				continue;
+			var tmpBounds = (colliders[i] as Collider).bounds;
+			tmpBounds.center.y = 0;
+			var dist = GetClosestDistFromObstacle(tmpBounds.center, radius + tmpBounds.extents.magnitude, from, to);
+			if (dist > 0 && minimum > dist) {
+				minimum = dist;			
+			}
+		}
+		return minimum == defaultMin?-1:minimum;		
+//		var pos = GetClosestPointOnObstacle(tr
+//		var direction = (from - to).normalized;
+//		for (var obj in tr.GetComponentsInChildren(Collider)) {
+//			var collider = obj as Collider;
+//		
+//		}	
+	}
+	
+//	function GetDistanceFromObstacle(tr:Transform, from:Vector3, to:Vector3, radius:float) {
+//		from.y = 0;
+//		to.y = 0;
+//	
+//		var colliders = tr.GetComponentsInChildren(Collider);
+//		var minimum = (to - from).magnitude;
+//		var defaultMin = minimum;
+//		for (var i = 0; i < colliders.length; i ++) {
+//			if (colliders[i] as WheelCollider)
+//				continue;
+//			var tmpBounds = (colliders[i] as Collider).bounds;
+//			tmpBounds.center.y = 0;
+//			var pos = GetClosestPointOnObstacle(tmpBounds, from, to);
+//			var normalDist = GetDistanceFromPos(pos, from, to);
+//			if (normalDist < radius) {
+//				var dist = GetDistanceFromDisp(pos, from, to);
+//				if ((dist > 0 || -dist < radius) && minimum > dist) {
+//					minimum = dist;				
+//				}
+//			}
+//		}
+//		return minimum == defaultMin?-1:minimum;		
+////		var pos = GetClosestPointOnObstacle(tr
+////		var direction = (from - to).normalized;
+////		for (var obj in tr.GetComponentsInChildren(Collider)) {
+////			var collider = obj as Collider;
+////		
+////		}	
+//	}
+	
+	function GetLocalGoal():Vector3 {
+		return path.corners[currentPathNode];
 	}
 }
