@@ -14,8 +14,7 @@ class AIVehicleDriver extends MonoBehaviour {
 	protected var path: NavMeshPath;
 
 	function Start () {
-		var tmpCamera = FindObjectOfType(TankCamera) as TankCamera;
-		AddObstacle(tmpCamera.target.transform);				
+				
 	}
 
 	function ClearGoals() {
@@ -60,8 +59,9 @@ class AIVehicleDriver extends MonoBehaviour {
 			currentDirection.y = 0;
 				
 			var tmpSeg = rigidbody.velocity.normalized * 20;
-			for (var obj in obstacles) {
-				var dist = GetDistanceFromObstacle(obj as Transform, transform.position, transform.position + tmpSeg, 1);
+			var list = SubdivisionManager.Retrieve(transform.position);
+			for (var tr:Transform in list) {
+				var dist = GetDistanceFromObstacle(tr, transform.position, transform.position + tmpSeg, 1);
 				if (dist != -1.0) {
 					transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
 					return;			

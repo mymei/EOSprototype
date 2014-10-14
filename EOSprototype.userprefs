@@ -1,13 +1,54 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\AIVehicleDriver.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TurretController.js">
     <Files>
-      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="262" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="265" Column="59" />
-      <File FileName="Assets\EOS\Scripts\AIVehicleDriver.js" Line="17" Column="3" />
-      <File FileName="Assets\EOS\Scripts\AIRoutingBehavior.js" Line="13" Column="2" />
-      <File FileName="Assets\EOS\Scripts\AITankDriver.js" Line="30" Column="3" />
+      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="85" Column="48" />
+      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AIVehicleDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AIRoutingBehavior.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AITankDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\AreaTrigger.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\EffectCache.js" Line="55" Column="4" />
+      <File FileName="Assets\EOS\Scripts\Etc\Obstacle.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\T90TankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerHandler.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerVehicleDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="9" Column="34" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="74" Column="29" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="EOS" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Etc" expanded="True" />
+                <Node name="Singletons" expanded="True" />
+                <Node name="TurretController.js" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>coord4Obj</Value>
+          <Value>subdivision</Value>
+          <Value>mgr</Value>
+          <Value>list</Value>
+          <Value>supportedNetworkLevels</Value>
+          <Value>networkView</Value>
+          <Value>rd.gameObject</Value>
+          <Value>rd.gameObject.networkView</Value>
+          <Value>rd.gameObject.GetInstanceID()</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

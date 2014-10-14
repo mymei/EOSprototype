@@ -23,27 +23,30 @@ function Update () {
 	for (var i = 0; i < activeEffectInfos.length; i++) {
 		var info = activeEffectInfos[i] as ActiveEffectInfo;
 		if (info.endTime != 0 && info.endTime < Time.time) {
-			if (info.effect.particleSystem != null) {
-				info.effect.particleSystem.Stop();			
-				info.effect.particleSystem.Clear();
-				info.effect.particleSystem.randomSeed = 1;
-			}
-			info.effect.SetActive(false);
+			SetEffectActive(info.effect, false);
 			activeEffectInfos.RemoveAt(i);
 			break;		
 		}	
 	}	
 }
 
+function SetEffectActive(effect:GameObject, flag:boolean) {
+	if (effect.networkView) {
+		effect.networkView.RPC("SetEffectActive", RPCMode.AllBuffered, flag);
+	}
+}
+
 static function Spawn(prefab:GameObject, pos:Vector3, rot:Quaternion, lifeTime:float):GameObject {
+	if (Network.isClient)
+		return;
 	var tmp:GameObject;
 	if (effectCache.cache.ContainsKey(prefab)) {		
 		for (var instance in effectCache.cache[prefab] as Array) {
 			tmp = instance as GameObject;
-			if (!tmp.activeSelf) {
-				tmp.SetActive(true);
+			if (!tmp.particleSystem.isPlaying) {
 				tmp.transform.position = pos;
 				tmp.transform.rotation = rot;
+				effectCache.SetEffectActive(tmp, true);
 				break;
 			}
 			tmp = null;
@@ -52,7 +55,7 @@ static function Spawn(prefab:GameObject, pos:Vector3, rot:Quaternion, lifeTime:f
 		effectCache.cache[prefab] = new Array();
 	}	
 	if (tmp == null) {
-		tmp = Instantiate(prefab, pos, rot);
+		tmp = Network.Instantiate(prefab, pos, rot, 0);
 		var array = effectCache.cache[prefab] as Array;
 		array.Push(tmp);
 	}
@@ -65,15 +68,12 @@ static function Spawn(prefab:GameObject, pos:Vector3, rot:Quaternion, lifeTime:f
 }
 
 static function Destroy(instance:GameObject) {
+	if (Network.isClient)
+		return;
 	for (var i = 0; i < effectCache.activeEffectInfos.length; i++) {
 		var info = effectCache.activeEffectInfos[i] as ActiveEffectInfo;
 		if (info.effect == instance) {
-			if (info.effect.particleSystem != null) {
-				info.effect.particleSystem.Stop();			
-				info.effect.particleSystem.Clear();
-				info.effect.particleSystem.randomSeed = 1;
-			}
-			info.effect.SetActive(false);
+			effectCache.SetEffectActive(info.effect, false);
 			effectCache.activeEffectInfos.RemoveAt(i);
 			break;		
 		}	
