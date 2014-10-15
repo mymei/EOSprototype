@@ -11,7 +11,6 @@ function Start () {
 }
 
 function Update () {
-	turretController.enabled = IsControllable();
 	if (IsControllable()) {
 		var goal = gunnerEye.position + (gunnerEye.forward * 500);
 		if (Physics.Raycast(gunnerEye.position, gunnerEye.forward, hit, 500)) {
@@ -19,7 +18,12 @@ function Update () {
 				goal = hit.point;			
 			}
 		}
-		turretController.AimControl(goal);	
+		
+		if (networkView && networkView.isMine) {
+			networkView.RPC("AimControl", RPCMode.All, goal);
+		} else {
+			turretController.AimControl(goal);	
+		}
 		
 		HandleInput();
 	}
@@ -30,7 +34,7 @@ function SetEye(eye:Transform) {
 }
 
 function IsControllable():boolean {
-	return gunnerEye != null && turretController != null;
+	return gunnerEye != null && turretController != null && (Network.peerType == NetworkPeerType.Disconnected || !networkView || networkView.isMine);
 }
 
 function HandleInput() {
@@ -58,6 +62,7 @@ function OnGUI() {
 		if (screenPos.z > 0) {
 			GUI.DrawTexture(Rect(screenPos.x - 32, (Screen.height - screenPos.y) - 32, 64, 64), targetTexture);
 		}
+		turretController.DrawHUD();
 //		if (!screenRect.Contains(screenPos)) {
 //			turretController.lockOn(null);
 //		}

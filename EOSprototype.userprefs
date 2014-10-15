@@ -1,22 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TurretController.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\Singletons\EffectCache.js">
     <Files>
       <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="85" Column="48" />
       <File FileName="Assets\EOS\Scripts\TruckController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\AIVehicleDriver.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="66" Column="19" />
+      <File FileName="Assets\EOS\Scripts\AIVehicleDriver.js" Line="59" Column="15" />
       <File FileName="Assets\EOS\Scripts\AIRoutingBehavior.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\AITankDriver.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\AreaTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Singletons\EffectCache.js" Line="55" Column="4" />
+      <File FileName="Assets\EOS\Scripts\Singletons\EffectCache.js" Line="19" Column="2" />
       <File FileName="Assets\EOS\Scripts\Etc\Obstacle.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\VehicleController\T90TankController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\PlayerHandler.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\PlayerVehicleDriver.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="9" Column="34" />
-      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="74" Column="29" />
+      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="74" Column="4" />
+      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="15" Column="3" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="167" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Network\Channel.js" Line="131" Column="51" />
+      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="27" Column="3" />
+      <File FileName="Assets\EOS\Scripts\TankCamera.js" Line="43" Column="26" />
+      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="35" Column="1" />
+      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="19" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,9 +29,9 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="EOS" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Etc" expanded="True" />
-                <Node name="Singletons" expanded="True" />
-                <Node name="TurretController.js" selected="True" />
+                <Node name="Singletons" expanded="True">
+                  <Node name="EffectCache.js" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -37,15 +42,12 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>coord4Obj</Value>
-          <Value>subdivision</Value>
-          <Value>mgr</Value>
-          <Value>list</Value>
-          <Value>supportedNetworkLevels</Value>
+          <Value>disconnectedLevel</Value>
+          <Value>Application.loadedLevelName</Value>
           <Value>networkView</Value>
-          <Value>rd.gameObject</Value>
-          <Value>rd.gameObject.networkView</Value>
-          <Value>rd.gameObject.GetInstanceID()</Value>
+          <Value>viewID</Value>
+          <Value>effectCache</Value>
+          <Value>tmp</Value>
         </State>
       </Pad>
     </Pads>

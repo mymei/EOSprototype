@@ -6,6 +6,7 @@ var dist : float = 10000;
 var gravity : float = 9.8;
 var explosion : GameObject;
 
+private var destroyed = false;
 private var spawnTime : float = 0.0;
 private var tr : Transform;
 var velocity : Vector3;
@@ -26,6 +27,8 @@ function GetAcceleration():Vector3 {
 }
 
 function Update () {
+	if (Network.isClient || destroyed)
+		return;
 	    
 	var newDir = Vector3.RotateTowards(tr.forward, accel_vector.normalized, 5 * Time.deltaTime, 0.0);
 	tr.rotation = Quaternion.LookRotation(newDir);
@@ -57,10 +60,17 @@ function Update () {
 	}
 	
 	if (collided) {
+		destroyed = true;
 		if (explosion != null) {
 			EffectCache.Spawn(explosion, transform.position, transform.rotation, 1.0);
 		}
-		Destroy(gameObject);
+		if (Network.isServer) {
+			if (networkView)
+				Network.RemoveRPCs(networkView.viewID);
+			Network.Destroy(gameObject);
+		} else {
+			Destroy(gameObject);
+		}
 	}
 }
 

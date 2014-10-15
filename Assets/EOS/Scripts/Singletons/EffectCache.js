@@ -31,14 +31,33 @@ function Update () {
 }
 
 function SetEffectActive(effect:GameObject, flag:boolean) {
-	if (effect.networkView) {
-		effect.networkView.RPC("SetEffectActive", RPCMode.AllBuffered, flag);
+	if (Network.isServer) {
+		if (effect.networkView) {
+			effect.networkView.RPC("SetEffectActive", RPCMode.All, flag);
+		}
+	} else {
+		if (effect.GetComponent(EffectHandler)) {
+			effect.SendMessage("SetEffectActive", flag, SendMessageOptions.DontRequireReceiver);		
+		} else {
+			if (effect.particleSystem != null) {
+				if (!flag) {			
+					effect.particleSystem.Stop();	
+					effect.particleSystem.Clear();
+					effect.particleSystem.randomSeed = 1;
+					effect.particleSystem.time = 0;
+				} else {
+					effect.particleSystem.Play();
+				}
+			}		
+		}
 	}
+
 }
 
 static function Spawn(prefab:GameObject, pos:Vector3, rot:Quaternion, lifeTime:float):GameObject {
 	if (Network.isClient)
 		return;
+		
 	var tmp:GameObject;
 	if (effectCache.cache.ContainsKey(prefab)) {		
 		for (var instance in effectCache.cache[prefab] as Array) {
@@ -55,7 +74,12 @@ static function Spawn(prefab:GameObject, pos:Vector3, rot:Quaternion, lifeTime:f
 		effectCache.cache[prefab] = new Array();
 	}	
 	if (tmp == null) {
-		tmp = Network.Instantiate(prefab, pos, rot, 0);
+		if (Network.isServer) {
+			tmp = Network.Instantiate(prefab, pos, rot, 0);
+		} else {
+			tmp = Instantiate(prefab, pos, rot);
+		
+		}
 		var array = effectCache.cache[prefab] as Array;
 		array.Push(tmp);
 	}

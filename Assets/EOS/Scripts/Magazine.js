@@ -35,7 +35,8 @@ function ChainFire(forced:boolean) {
 
 function InnerFire(pos:Vector3, rot:Quaternion) {
 	if (GetAmmoLeft() > 0) {
-		var instance = Instantiate(bullet, pos, rot);
+		var instance = Network.isServer?Network.Instantiate(bullet, pos, rot, 0):Instantiate(bullet, pos, rot);
+
 		if (owner) {
 			instance.SendMessage("SetOwner", owner, SendMessageOptions.DontRequireReceiver);
 		}
@@ -50,7 +51,7 @@ function Fire(pos:Vector3, rot:Quaternion, _chain:int, _chainInterval:float, muz
 	fireMuzzles = muzzles;
 	firePos = pos;
 	fireRot = rot;
-	
+
 	ChainFire(true);
 }
 

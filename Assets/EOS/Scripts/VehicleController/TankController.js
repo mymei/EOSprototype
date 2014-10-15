@@ -252,6 +252,7 @@ class TankController extends MonoBehaviour {
 	var rightTorque:float;
 	function ApplyThrottle(relativeVelocity : Vector3)
 	{
+		var _defaultTorque = defaultTorque * (rigidbody.velocity.magnitude < 1 && throttle == 0 && steer == 0?100:1);
 		for(var index = 0; index < wheels.length; index++)
 		{
 			var w = wheels[index];
@@ -259,8 +260,8 @@ class TankController extends MonoBehaviour {
 			var flag = HaveTheSameSign(relativeVelocity.z, throttle) || Mathf.Abs(relativeVelocity.z) < 1;
 			var multiplier = Mathf.Max(-1.0, Mathf.Min(1.0, (throttle + (w.isLeft?1:-1) * steer * (throttle >= 0?1:-1)))); 
 			
-			w.collider.motorTorque = flag?multiplier * Mathf.Sign(motorTorque) * (getMotorTorque(Mathf.Max(Mathf.Abs(motorTorque) - defaultTorque, 0), w.collider.rpm) + defaultTorque):0;
-			w.collider.brakeTorque = (!flag?(brakeTorque - defaultTorque) * Mathf.Abs(throttle):0) + defaultTorque;
+			w.collider.motorTorque = flag?multiplier * Mathf.Sign(motorTorque) * (getMotorTorque(Mathf.Max(Mathf.Abs(motorTorque) - _defaultTorque, 0), w.collider.rpm) + _defaultTorque):0;
+			w.collider.brakeTorque = (!flag?(brakeTorque - _defaultTorque) * Mathf.Abs(throttle):0) + _defaultTorque;
 		}	
 		rpmMonitor = wheels.Length > 0?wheels[0].collider.rpm:0;
 		leftTorque = wheels[0].collider.motorTorque;

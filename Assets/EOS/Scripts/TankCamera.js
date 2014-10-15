@@ -152,12 +152,12 @@ function SetFOV(newFOV:float) {
 }
 
 function isTargetVisible() {
-	return camera.fieldOfView == defaultFOV;
+	return !isZooming;
 }
 
 function setVisibility(_target:Transform, flag:boolean) {
 	if (_target) {
-		for (var r : Component in _target.GetComponentsInChildren(Renderer)) {
+		for (var r : Component in _target.root.GetComponentsInChildren(Renderer)) {
 		    (r as Renderer).enabled = flag;
 		}	
 	}
@@ -184,9 +184,9 @@ function UpdateTarget() {
 	if (currentTarget != ret) {
 		setVisibility(currentTarget, true);
 		currentTarget = ret;
-		setVisibility(currentTarget, isTargetVisible());
 		SetAim(null);
 	}
+	setVisibility(currentTarget, isTargetVisible());
 }
 
 function SetAim(newAim:Transform) {

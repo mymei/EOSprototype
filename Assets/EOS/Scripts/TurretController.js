@@ -20,6 +20,9 @@ var CoolDown:float = 1.0;
 
 var weaponTag:String;
 
+var fireImpulse : float = 100;
+var smoke : GameObject;
+
 var gauge:Texture;
 
 var skin:GUISkin;
@@ -33,6 +36,7 @@ private var euler:Vector3;
 
 private var dummyTarget:GameObject;
 
+@RPC
 function AimControl(targetPos:Vector3) {
 	aimPos = targetPos;
 	SetTarget(aimTarget==null?transform:aimTarget);
@@ -140,6 +144,10 @@ function Fire() {
 					tmpPos /= muzzles.Length;
 				}
 				magazine.Fire(tmpPos, gun.rotation, chainShot, chainInterval, muzzles);
+				if (smoke != null) {
+					EffectCache.Spawn(smoke, tmpPos, gun.rotation, 10.0);
+				}
+				transform.root.rigidbody.AddForceAtPosition(gun.rotation * Vector3.forward * -fireImpulse, tmpPos, ForceMode.Impulse);
 			}
 		}
 	}
@@ -164,7 +172,7 @@ function IsSafetySwitchOff():boolean {
 	return !SafetySwitch;
 }
 
-function OnGUI() {
+function DrawHUD() {
 	if (IsSafetySwitchOff() && magazine != null && gauge != null) {
 		var tmp = magazine.GetAmmoLeft() == 0?1:Mathf.Max(0, Mathf.Min(CoolDown, CoolDown - (Time.time - LastFireTime))) / CoolDown;
 		GUI.DrawTexture(Rect(10, Screen.height - gauge.height - 10, gauge.width * (1 - tmp), gauge.height), gauge);

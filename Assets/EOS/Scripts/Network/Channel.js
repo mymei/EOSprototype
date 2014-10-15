@@ -49,25 +49,29 @@ function OnGUI ()
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     } else {
-        GUILayout.BeginArea(Rect(0, Screen.height - 30, Screen.width, 30));
-        GUILayout.BeginHorizontal();
-        
-		if (Network.isServer) {
-			for (var level in supportedNetworkLevels)
-	        {
-	            if (GUILayout.Button(level))
-	            {
-	                Network.RemoveRPCsInGroup(0);
-	                Network.RemoveRPCsInGroup(1);
-	                networkView.RPC( "LoadLevel", RPCMode.AllBuffered, level, lastLevelPrefix + 1);
-	            }
-	        }		
-		} else if (Network.isClient)
-			GUILayout.Label("Running as a client");         
+    	if (Application.loadedLevelName.ToLower() == disconnectedLevel.ToLower()) {
+    	    
+    	    GUILayout.BeginArea(Rect(0, Screen.height - 30, Screen.width, 30));
+	        GUILayout.BeginHorizontal();
+	        
+			if (Network.isServer) {
+				for (var level in supportedNetworkLevels)
+		        {
+		            if (GUILayout.Button(level))
+		            {
+		                Network.RemoveRPCsInGroup(0);
+		                Network.RemoveRPCsInGroup(1);
+		                networkView.RPC( "LoadLevel", RPCMode.AllBuffered, level, lastLevelPrefix + 1);
+		            }
+		        }		
+			} else if (Network.isClient)
+				GUILayout.Label("Running as a client");         
 
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
-        GUILayout.EndArea();
+	        GUILayout.FlexibleSpace();
+	        GUILayout.EndHorizontal();
+	        GUILayout.EndArea();
+    	
+    	}
     }
 }
 
@@ -111,23 +115,24 @@ function LoadLevel (level : String, levelPrefix : int)
         // Now the level has been loaded and we can start sending out data to clients
         Network.SetSendingEnabled(0, true);
 
-		if (Network.isServer) {
-	        for (var obj in FindObjectsOfType(Rigidbody)) {
-	        	networkView.RPC("SyncRigidbody", RPCMode.AllBuffered, (obj as Rigidbody).gameObject.name, Network.AllocateViewID());
-	        }
-        }
+//		if (Network.isServer) {
+//	        for (var obj in FindObjectsOfType(Rigidbody)) {
+//	        	networkView.RPC("SyncRigidbody", RPCMode.AllBuffered, (obj as Rigidbody).gameObject.name, Network.AllocateViewID());
+//	        }
+//        }
 }
 
-@RPC
-function SyncRigidbody(name:String, viewID:NetworkViewID) {
-	var go = GameObject.Find(name) as GameObject;
-	if (go) {
-		var view = go.AddComponent(NetworkView);
-		(view as NetworkView).viewID = viewID;
-		(view as NetworkView).observed = go.rigidbody;
-	
-	}
-}
+//@RPC
+//function SyncRigidbody(name:String, viewID:NetworkViewID) {
+//	var go = GameObject.Find(name) as GameObject;
+//	if (go) {
+//		var view = go.AddComponent(NetworkView);
+//		(view as NetworkView).viewID = viewID;
+//		(view as NetworkView).observed = go.rigidbody;
+//		(view as NetworkView).stateSynchronization = NetworkStateSynchronization.Unreliable;
+//	
+//	}
+//}
 
 function OnDisconnectedFromServer ()
 {
