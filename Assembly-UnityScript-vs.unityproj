@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DiscardShells.js" />
      <Compile Include="Assets\EOS\Scripts\AIBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AIRoutingBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AITankDriver.js" />
@@ -57,6 +58,7 @@
      <Compile Include="Assets\EOS\Scripts\Etc\EffectHandler.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\Obstacle.js" />
      <Compile Include="Assets\EOS\Scripts\HelicopterController.js" />
+     <Compile Include="Assets\EOS\Scripts\Human\HumanArmor.js" />
      <Compile Include="Assets\EOS\Scripts\Human\HumanController.js" />
      <Compile Include="Assets\EOS\Scripts\Human\PlayerSoldierHandler.js" />
      <Compile Include="Assets\EOS\Scripts\Human\SoldierController.js" />

@@ -32,7 +32,7 @@ class WeaponController extends MonoBehaviour {
 		if (magazine != null) {
 			if (IsAmmoReloaded()) {
 				LastFireTime = Time.time;
-				magazine.Fire(gun.position, Quaternion.LookRotation(aimPos - transform.position), chainShot, chainInterval, muzzles);
+				magazine.Fire(gun.position, Quaternion.LookRotation(aimPos - transform.position), aimPos, chainShot, chainInterval, muzzles);
 			}
 		}
 	}

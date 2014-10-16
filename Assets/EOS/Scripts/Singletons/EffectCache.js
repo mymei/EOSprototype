@@ -19,7 +19,7 @@ function Start () {
 }
 
 function Update () {
-
+	effectCache = this;
 	for (var i = 0; i < activeEffectInfos.length; i++) {
 		var info = activeEffectInfos[i] as ActiveEffectInfo;
 		if (info.endTime != 0 && info.endTime < Time.time) {
@@ -62,7 +62,7 @@ static function Spawn(prefab:GameObject, pos:Vector3, rot:Quaternion, lifeTime:f
 	if (effectCache.cache.ContainsKey(prefab)) {		
 		for (var instance in effectCache.cache[prefab] as Array) {
 			tmp = instance as GameObject;
-			if (!tmp.particleSystem.isPlaying) {
+			if (!tmp.particleSystem || !tmp.particleSystem.isPlaying) {
 				tmp.transform.position = pos;
 				tmp.transform.rotation = rot;
 				effectCache.SetEffectActive(tmp, true);

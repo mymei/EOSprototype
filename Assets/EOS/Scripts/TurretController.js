@@ -27,6 +27,8 @@ var gauge:Texture;
 
 var skin:GUISkin;
 
+var maxRange:float = 2000;
+
 private var hit:RaycastHit = new RaycastHit();
 private var raycastLayers:LayerMask = -1;
 
@@ -62,10 +64,10 @@ function SetTarget(target:Transform) {
 		euler = Vector3.zero;
 		EffectCache.Destroy(dummyTarget);
 		if (aimTarget != null && aimTarget != transform) {
-			dummyTarget = EffectCache.Spawn(aimTarget.parent.gameObject, aimTarget.position, aimTarget.rotation, 0);
-			for (var comp in dummyTarget.GetComponentsInChildren(Collider)) {
-				(comp as Collider).enabled = false;
-			}
+//			dummyTarget = EffectCache.Spawn(aimTarget.parent.gameObject, aimTarget.position, aimTarget.rotation, 0);
+//			for (var comp in dummyTarget.GetComponentsInChildren(Collider)) {
+//				(comp as Collider).enabled = false;
+//			}
 		}
 	}
 }
@@ -85,8 +87,9 @@ function Update () {
 	if (isAiming()) {
 		var _aimPos = getAimPos();
 		
-		var tmpDir:Vector3 = transform.parent.InverseTransformDirection(_aimPos - transform.position);
-		var lookRotation = Quaternion.LookRotation(tmpDir);
+		var dir = _aimPos - transform.position;		
+		var localDir:Vector3 = transform.parent.InverseTransformDirection(dir);
+		var lookRotation = Quaternion.LookRotation(localDir);
 		
 //		transform.localRotation.eulerAngles.y = Mathf.SmoothDampAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y, tmpTest, 0.1, turretTraverse);
 		transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y + euler.y, turretTraverse * Time.deltaTime);
@@ -99,8 +102,8 @@ function Update () {
 		gunTransform.localRotation.eulerAngles.x = 
 		Mathf.MoveTowardsAngle(gunTransform.localRotation.eulerAngles.x, tmp + euler.x, Time.deltaTime * elevationSpeed); 	
 		
-		var currentTargetPos = transform.position + gun.forward * 500;
-		if(Physics.Raycast(transform.position, gun.forward, hit, 500, ~LayerMask.GetMask("projectile"))) {
+		var currentTargetPos = transform.position + gun.forward * maxRange;
+		if(Physics.Raycast(transform.position, gun.forward, hit, maxRange, ~LayerMask.GetMask("projectile"))) {
 			if (hit.collider.transform.root.GetComponentInChildren(TurretController) != this) {
 				currentTargetPos = hit.point;			
 			}
@@ -143,7 +146,7 @@ function Fire() {
 					}
 					tmpPos /= muzzles.Length;
 				}
-				magazine.Fire(tmpPos, gun.rotation, chainShot, chainInterval, muzzles);
+				magazine.Fire(tmpPos, gun.rotation, GetTargetPos(), chainShot, chainInterval, muzzles);
 				if (smoke != null) {
 					EffectCache.Spawn(smoke, tmpPos, gun.rotation, 10.0);
 				}

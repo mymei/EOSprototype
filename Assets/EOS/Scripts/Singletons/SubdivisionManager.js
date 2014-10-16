@@ -16,6 +16,7 @@ function Start () {
 }
 
 function Update () {
+	mgr = this;
 	for (var obj in managedObjects) {
 		var tr = obj as Transform;
 		var coord = GetSubdivisionCoord(tr.position);

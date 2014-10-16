@@ -48,6 +48,7 @@ function ChangeMagazine(magazine:Magazine) {
 			if (magazine.bullet.CompareTag(turretController.weaponTag)) {
 				ResetAllSafetySwitch();
 				turretController.SetSafetySwitch(false);
+				turretController.Reload(magazine);
 				break;				
 			}
 		}	

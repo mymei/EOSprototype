@@ -11,6 +11,7 @@ private var fireMuzzles:Transform[];
 private var firePos:Vector3;
 private var fireRot:Quaternion;
 private var lastFireTime:float = 0.0;
+private var fireTarget:Vector3;
 
 function Start () {
 	ammoLeft = ammo;
@@ -36,6 +37,7 @@ function ChainFire(forced:boolean) {
 function InnerFire(pos:Vector3, rot:Quaternion) {
 	if (GetAmmoLeft() > 0) {
 		var instance = Network.isServer?Network.Instantiate(bullet, pos, rot, 0):Instantiate(bullet, pos, rot);
+		instance.SendMessage("SetTarget", fireTarget, SendMessageOptions.DontRequireReceiver);
 
 		if (owner) {
 			instance.SendMessage("SetOwner", owner, SendMessageOptions.DontRequireReceiver);
@@ -45,14 +47,18 @@ function InnerFire(pos:Vector3, rot:Quaternion) {
 	}
 }
 
-function Fire(pos:Vector3, rot:Quaternion, _chain:int, _chainInterval:float, muzzles:Transform[]) {
+function Fire(pos:Vector3, rot:Quaternion, target:Vector3, _chain:int, _chainInterval:float, muzzles:Transform[]) {
 	chain = Mathf.Max(0, _chain);
 	chainInterval = Mathf.Max(0.0, _chainInterval);
 	fireMuzzles = muzzles;
 	firePos = pos;
 	fireRot = rot;
+	fireTarget = target;
 
 	ChainFire(true);
+}
+
+function CalcGunDirection(from:Vector3, to:Vector3) {
 }
 
 private var owner : Transform;
