@@ -11,10 +11,10 @@ function SetEffectActive(flag:boolean) {
 			particleSystem.randomSeed = 1;
 			particleSystem.time = 0;
 		} else {
-			if (Network.peerType == NetworkPeerType.Disconnected) {
-				particleSystem.Play();	
+			if (MyNetwork.IsGOControlled(gameObject) || networkView.observed != this) {
+				particleSystem.Play();
 			} else {
-				ignited = true;		
+				ignited = true;
 			}
 		}
 	}

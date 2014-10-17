@@ -19,6 +19,6 @@ function Start () {
 
 function Update () {
 	if (Time.time - startTime > lifeTime) {
-		Destroy(gameObject);	
+		MyNetwork.Destroy(gameObject);	
 	}	
 }

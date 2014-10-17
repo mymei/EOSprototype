@@ -36,12 +36,12 @@ function ChainFire(forced:boolean) {
 
 function InnerFire(pos:Vector3, rot:Quaternion) {
 	if (GetAmmoLeft() > 0) {
-		var instance = Network.isServer?Network.Instantiate(bullet, pos, rot, 0):Instantiate(bullet, pos, rot);
-		instance.SendMessage("SetTarget", fireTarget, SendMessageOptions.DontRequireReceiver);
-
-		if (owner) {
+		var instance = MyNetwork.Instantiate(bullet, pos, rot, gameObject);
+		if (instance) {
+			instance.SendMessage("SetTarget", fireTarget, SendMessageOptions.DontRequireReceiver);
 			instance.SendMessage("SetOwner", owner, SendMessageOptions.DontRequireReceiver);
 		}
+
 		ammoLeft --;
 		lastFireTime = Time.time;	
 	}
@@ -59,6 +59,10 @@ function Fire(pos:Vector3, rot:Quaternion, target:Vector3, _chain:int, _chainInt
 }
 
 function CalcGunDirection(from:Vector3, to:Vector3) {
+}
+
+function OnSerializeNetworkView(stream:BitStream, info:NetworkMessageInfo) {
+	stream.Serialize(ammoLeft);
 }
 
 private var owner : Transform;

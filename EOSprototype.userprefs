@@ -1,16 +1,24 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\BulletController.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\VehicleController\TankController.js">
     <Files>
-      <File FileName="Assets\EOS\Scripts\Human\SoldierController.js" Line="18" Column="22" />
-      <File FileName="Assets\EOS\Scripts\Human\HumanController.js" Line="27" Column="4" />
-      <File FileName="Assets\EOS\Scripts\Armor.js" Line="12" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Human\HumanArmor.js" Line="6" Column="39" />
-      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="88" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="81" Column="1" />
-      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="107" Column="37" />
-      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="12" Column="32" />
-      <File FileName="Assets\EOS\Scripts\Human\WeaponController.js" Line="37" Column="4" />
+      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="5" Column="2" />
+      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Human\WeaponController.js" Line="1" Column="1" />
+      <File FileName="Assets\DiscardShells.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\WeaponChanger.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\GOCache.js" Line="1" Column="1" />
+      <File FileName="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\ModernTankController.js" Line="16" Column="40" />
+      <File FileName="Assets\EOS\Scripts\Human\HumanController.js" Line="32" Column="32" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="17" Column="40" />
+      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="72" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,8 +27,9 @@
             <Node name="EOS" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Human" expanded="True" />
-                <Node name="Singletons" expanded="True" />
-                <Node name="BulletController.js" selected="True" />
+                <Node name="VehicleController" expanded="True">
+                  <Node name="TankController.js" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -49,6 +58,8 @@
           <Value>Mathf.Cos(Mathf.Atan(v_v / v_h))</Value>
           <Value>speed * Mathf.Cos(Mathf.Atan(v_v / v_h))</Value>
           <Value>v_h</Value>
+          <Value>targetTexture</Value>
+          <Value>turretTargetOrientation</Value>
         </State>
       </Pad>
     </Pads>

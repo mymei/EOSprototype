@@ -6,7 +6,7 @@ class CaterpillarBone
 	var BoneDefaultPosition:Vector3;	
 }
 
-class T90TankController extends TankController
+class ModernTankController extends TankController
 {
 	var leftBones : Transform[];
 	var rightBones : Transform[];

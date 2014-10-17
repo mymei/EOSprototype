@@ -40,5 +40,9 @@ class HumanController extends MonoBehaviour {
 	function Killed() {
 		dead = true;
 		anim.SetBool("Dead", true);	
+		for (var cmp in GetComponentsInChildren(Renderer)) {
+			var renderer = cmp as Renderer;
+			renderer.material.color = Color.black;
+		}
 	}
 }

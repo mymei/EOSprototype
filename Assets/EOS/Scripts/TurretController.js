@@ -14,8 +14,6 @@ var elevation :float = 20;
 var aimPos:Vector3;
 var aimTarget:Transform = null;
 
-var ignoreLayers:LayerMask = -1;
-
 var CoolDown:float = 1.0;
 
 var weaponTag:String;
@@ -30,7 +28,6 @@ var skin:GUISkin;
 var maxRange:float = 2000;
 
 private var hit:RaycastHit = new RaycastHit();
-private var raycastLayers:LayerMask = -1;
 
 private var actualTargetPos:Vector3;
 private var magazine:Magazine;
@@ -38,11 +35,9 @@ private var euler:Vector3;
 
 private var dummyTarget:GameObject;
 
-@RPC
 function AimControl(targetPos:Vector3) {
 	aimPos = targetPos;
 	SetTarget(aimTarget==null?transform:aimTarget);
-	gun = gun==null?transform.GetComponentsInChildren(Transform)[1] as Transform:gun;	
 }
 
 function lockOn(target:Transform) {
@@ -62,9 +57,9 @@ function SetTarget(target:Transform) {
 	if (aimTarget != target) {
 		aimTarget = target;
 		euler = Vector3.zero;
-		EffectCache.Destroy(dummyTarget);
+		GOCache.Destroy(dummyTarget);
 		if (aimTarget != null && aimTarget != transform) {
-//			dummyTarget = EffectCache.Spawn(aimTarget.parent.gameObject, aimTarget.position, aimTarget.rotation, 0);
+//			dummyTarget = GOCache.Spawn(aimTarget.parent.gameObject, aimTarget.position, aimTarget.rotation, 0);
 //			for (var comp in dummyTarget.GetComponentsInChildren(Collider)) {
 //				(comp as Collider).enabled = false;
 //			}
@@ -77,31 +72,36 @@ function getAimPos():Vector3 {
 }
 
 function Start () {
-	var tmp:int = ignoreLayers;
-	raycastLayers = ~tmp;
-//	GUI.skin = skin;
+	gun = gun==null?transform.GetComponentsInChildren(Transform)[1] as Transform:gun;	
 }
 
-private var tmpTest = 0.0;
+private var turretTargetOrientation:Quaternion;
+function UpdateTurretOrientation(pos:Vector3) {
+	var dir = transform.parent.InverseTransformDirection(pos - transform.position);		
+	turretTargetOrientation = Quaternion.LookRotation(dir);
+	
+	var tmp = turretTargetOrientation.eulerAngles.x + euler.x;
+	tmp = tmp > 180?Mathf.Max(360 - elevation, tmp):tmp;
+	tmp = tmp <= 180?Mathf.Min(-depression, tmp):tmp;
+	turretTargetOrientation.eulerAngles.x = tmp;
+	turretTargetOrientation.eulerAngles.y += euler.y;
+}
+
+function OnSerializeNetworkView(stream:BitStream, info:NetworkMessageInfo) {
+	stream.Serialize(turretTargetOrientation);
+}
+
 function Update () {
-	if (isAiming()) {
-		var _aimPos = getAimPos();
-		
-		var dir = _aimPos - transform.position;		
-		var localDir:Vector3 = transform.parent.InverseTransformDirection(dir);
-		var lookRotation = Quaternion.LookRotation(localDir);
-		
-//		transform.localRotation.eulerAngles.y = Mathf.SmoothDampAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y, tmpTest, 0.1, turretTraverse);
-		transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, lookRotation.eulerAngles.y + euler.y, turretTraverse * Time.deltaTime);
-		
-		var tmp = lookRotation.eulerAngles.x;
-		tmp = tmp > 180?Mathf.Max(360 - elevation, tmp):tmp;
-		tmp = tmp <= 180?Mathf.Min(-depression, tmp):tmp;	
-		
-		var gunTransform = gun.transform;
-		gunTransform.localRotation.eulerAngles.x = 
-		Mathf.MoveTowardsAngle(gunTransform.localRotation.eulerAngles.x, tmp + euler.x, Time.deltaTime * elevationSpeed); 	
-		
+	if (MyNetwork.IsGOControlled(gameObject)) {
+		if (isAiming()) {
+			UpdateTurretOrientation(getAimPos());
+		}	
+	}
+	
+	transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, turretTargetOrientation.eulerAngles.y, turretTraverse * Time.deltaTime);
+	gun.transform.localRotation.eulerAngles.x = Mathf.MoveTowardsAngle(gun.transform.localRotation.eulerAngles.x, turretTargetOrientation.eulerAngles.x, Time.deltaTime * elevationSpeed); 	
+
+	if (MyNetwork.IsGOControlled(gameObject)) {
 		var currentTargetPos = transform.position + gun.forward * maxRange;
 		if(Physics.Raycast(transform.position, gun.forward, hit, maxRange, ~LayerMask.GetMask("projectile"))) {
 			if (hit.collider.transform.root.GetComponentInChildren(TurretController) != this) {
@@ -117,7 +117,7 @@ function Update () {
 			dummyTarget.transform.rotation *= Quaternion.AngleAxis(aimTarget.root.rigidbody.angularVelocity.magnitude * Mathf.Rad2Deg * 0.5, aimTarget.root.rigidbody.angularVelocity.normalized);
 			
 			aimTarget.root.rigidbody.angularVelocity * 0.5;
-		}
+		}	
 	}
 }
 
@@ -148,7 +148,7 @@ function Fire() {
 				}
 				magazine.Fire(tmpPos, gun.rotation, GetTargetPos(), chainShot, chainInterval, muzzles);
 				if (smoke != null) {
-					EffectCache.Spawn(smoke, tmpPos, gun.rotation, 10.0);
+					GOCache.Spawn(smoke, tmpPos, gun.rotation, 10.0);
 				}
 				transform.root.rigidbody.AddForceAtPosition(gun.rotation * Vector3.forward * -fireImpulse, tmpPos, ForceMode.Impulse);
 			}

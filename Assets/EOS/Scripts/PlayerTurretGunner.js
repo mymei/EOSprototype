@@ -19,12 +19,7 @@ function Update () {
 			}
 		}
 		
-		if (networkView && networkView.isMine) {
-			networkView.RPC("AimControl", RPCMode.All, goal);
-		} else {
-			turretController.AimControl(goal);	
-		}
-		
+		turretController.AimControl(goal);		
 		HandleInput();
 	}
 }
@@ -34,11 +29,11 @@ function SetEye(eye:Transform) {
 }
 
 function IsControllable():boolean {
-	return gunnerEye != null && turretController != null && (Network.peerType == NetworkPeerType.Disconnected || !networkView || networkView.isMine);
+	return gunnerEye != null && turretController != null && MyNetwork.IsGOControlled(gameObject);
 }
 
 function HandleInput() {
-	if (IsControllable() && turretController.IsSafetySwitchOff()) {
+	if (turretController.IsSafetySwitchOff()) {
 		if (Input.GetButtonDown("Fire1")) {
 			turretController.Fire();
 		} else if (Input.GetButtonDown("Fire2")) {

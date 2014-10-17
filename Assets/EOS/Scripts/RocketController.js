@@ -62,15 +62,9 @@ function Update () {
 	if (collided) {
 		destroyed = true;
 		if (explosion != null) {
-			EffectCache.Spawn(explosion, transform.position, transform.rotation, 1.0);
+			GOCache.Spawn(explosion, transform.position, transform.rotation, 1.0);
 		}
-		if (Network.isServer) {
-			if (networkView)
-				Network.RemoveRPCs(networkView.viewID);
-			Network.Destroy(gameObject);
-		} else {
-			Destroy(gameObject);
-		}
+		MyNetwork.Destroy(gameObject);
 	}
 }
 

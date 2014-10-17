@@ -13,7 +13,7 @@
 	var isLeft : boolean = false;
 }
 
-class TankController extends MonoBehaviour {
+class TankController extends VehicleController {
 	private var wheelRadius : float = 0.4;
 
 	var suspensionRange : float = 0.4;
