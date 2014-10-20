@@ -3,6 +3,8 @@
 var ammo:int;
 var bullet : GameObject;
 
+var magazineTag:String;
+
 private var ammoLeft : int;
 
 private var chain:int = 0;

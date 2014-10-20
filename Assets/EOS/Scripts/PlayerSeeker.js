@@ -6,7 +6,6 @@ class PlayerSeeker extends MonoBehaviour {
 	var viewRange:float = 1000;
 	
 	function SetEye(eye:Transform) {
-		Debug.Log("hello");
 		seekerEye = eye;
 	}
 	

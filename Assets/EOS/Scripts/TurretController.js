@@ -16,7 +16,7 @@ var aimTarget:Transform = null;
 
 var CoolDown:float = 1.0;
 
-var weaponTag:String;
+var magazineTag:String;
 
 var fireImpulse : float = 100;
 var smoke : GameObject;
@@ -26,6 +26,8 @@ var gauge:Texture;
 var skin:GUISkin;
 
 var maxRange:float = 2000;
+
+var Movable:boolean = true;
 
 private var hit:RaycastHit = new RaycastHit();
 
@@ -92,14 +94,17 @@ function OnSerializeNetworkView(stream:BitStream, info:NetworkMessageInfo) {
 }
 
 function Update () {
-	if (MyNetwork.IsGOControlled(gameObject)) {
-		if (isAiming()) {
-			UpdateTurretOrientation(getAimPos());
-		}	
-	}
+
+	if (Movable) {
+		if (MyNetwork.IsGOControlled(gameObject)) {
+			if (isAiming()) {
+				UpdateTurretOrientation(getAimPos());
+			}	
+		}
 	
-	transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, turretTargetOrientation.eulerAngles.y, turretTraverse * Time.deltaTime);
-	gun.transform.localRotation.eulerAngles.x = Mathf.MoveTowardsAngle(gun.transform.localRotation.eulerAngles.x, turretTargetOrientation.eulerAngles.x, Time.deltaTime * elevationSpeed); 	
+		transform.localRotation.eulerAngles.y = Mathf.MoveTowardsAngle(transform.localRotation.eulerAngles.y, turretTargetOrientation.eulerAngles.y, turretTraverse * Time.deltaTime);
+		gun.transform.localRotation.eulerAngles.x = Mathf.MoveTowardsAngle(gun.transform.localRotation.eulerAngles.x, turretTargetOrientation.eulerAngles.x, Time.deltaTime * elevationSpeed); 	
+	}
 
 	if (MyNetwork.IsGOControlled(gameObject)) {
 		var currentTargetPos = transform.position + gun.forward * maxRange;

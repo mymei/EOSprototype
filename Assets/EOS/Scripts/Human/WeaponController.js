@@ -4,7 +4,6 @@ class WeaponController extends MonoBehaviour {
 
 	var CoolDown:float = 1.0;
 	var PreparationTime:float = 2.0;
-	var weaponTag:String;
 	
 	var magazine:Magazine;
 	var gun:Transform;

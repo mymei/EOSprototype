@@ -13,7 +13,7 @@ function Start () {
 		var magazine = magazineList[i] as Magazine;		
 		for (var cmp in turretList) {
 			var turretController = cmp as TurretController;
-			if (turretController.GetMagazine() == null && magazine.bullet.CompareTag(turretController.weaponTag)) {
+			if (turretController.GetMagazine() == null && magazine.magazineTag == turretController.magazineTag) {
 				turretController.Reload(magazine);
 				break;
 			}
@@ -45,7 +45,7 @@ function ChangeMagazine(magazine:Magazine) {
 	if (magazine != null) {
 		for (var cmp in turretList) {
 			var turretController = cmp as TurretController;
-			if (magazine.bullet.CompareTag(turretController.weaponTag)) {
+			if (magazine.magazineTag == turretController.magazineTag) {
 				ResetAllSafetySwitch();
 				turretController.SetSafetySwitch(false);
 				turretController.Reload(magazine);

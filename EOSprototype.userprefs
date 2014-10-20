@@ -1,27 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TruckController.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\Armors\ChopperArmor.js">
     <Files>
-      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="5" Column="2" />
-      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="89" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="18" Column="46" />
+      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\Magazine.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Human\WeaponController.js" Line="1" Column="1" />
-      <File FileName="Assets\DiscardShells.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\WeaponChanger.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Singletons\GOCache.js" Line="1" Column="1" />
-      <File FileName="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\ModernTankController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Human\HumanController.js" Line="43" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="16" Column="47" />
-      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="93" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="3" Column="48" />
-      <File FileName="Assets\EOS\Scripts\Armor.js" Line="7" Column="3" />
-      <File FileName="Assets\EOS\Scripts\Human\HumanArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="61" Column="21" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="7" Column="36" />
+      <File FileName="Assets\EOS\Scripts\Armors\Armor.js" Line="14" Column="11" />
+      <File FileName="Assets\EOS\Scripts\SlugBase.js" Line="19" Column="12" />
+      <File FileName="Assets\EOS\Scripts\Armors\APCArmor.js" Line="25" Column="2" />
+      <File FileName="Assets\EOS\Scripts\Armors\T90Armor.js" Line="13" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\TechnicalArmor.js" Line="3" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\Leopard2Armor.js" Line="7" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\ChopperArmor.js" Line="8" Column="22" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="15" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,9 +23,10 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="EOS" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Human" expanded="True" />
+                <Node name="Armors" expanded="True">
+                  <Node name="ChopperArmor.js" selected="True" />
+                </Node>
                 <Node name="VehicleController" expanded="True" />
-                <Node name="TruckController.js" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -42,26 +37,13 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>fireImpulse</Value>
-          <Value>ignited</Value>
-          <Value>networkView</Value>
-          <Value>speed</Value>
-          <Value>speed * Time.deltaTime</Value>
-          <Value>com</Value>
-          <Value>hits</Value>
-          <Value>hit</Value>
-          <Value>aimTarget.parent</Value>
-          <Value>mgr</Value>
-          <Value>SubdivisionManager.mgr</Value>
-          <Value>Physics.gravity</Value>
-          <Value>hori</Value>
-          <Value>velocity</Value>
-          <Value>Mathf.Atan(v_v / v_h)</Value>
-          <Value>Mathf.Cos(Mathf.Atan(v_v / v_h))</Value>
-          <Value>speed * Mathf.Cos(Mathf.Atan(v_v / v_h))</Value>
-          <Value>v_h</Value>
-          <Value>targetTexture</Value>
-          <Value>turretTargetOrientation</Value>
+          <Value>seeker</Value>
+          <Value>HP</Value>
+          <Value>SafetySwitch</Value>
+          <Value>turretController.magazineTag</Value>
+          <Value>magazine.magazineTag</Value>
+          <Value>magazineTag</Value>
+          <Value>HP</Value>
         </State>
       </Pad>
     </Pads>

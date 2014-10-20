@@ -53,7 +53,13 @@
      <Compile Include="Assets\EOS\Scripts\AITruckDriver.js" />
      <Compile Include="Assets\EOS\Scripts\AIVehicleDriver.js" />
      <Compile Include="Assets\EOS\Scripts\AreaTrigger.js" />
-     <Compile Include="Assets\EOS\Scripts\Armor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\APCArmor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\Armor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\ChopperArmor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\Leopard2Armor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\ReactiveArmor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\T90Armor.js" />
+     <Compile Include="Assets\EOS\Scripts\Armors\TechnicalArmor.js" />
      <Compile Include="Assets\EOS\Scripts\BulletController.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\EffectHandler.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\Obstacle.js" />
@@ -74,6 +80,7 @@
      <Compile Include="Assets\EOS\Scripts\RocketController.js" />
      <Compile Include="Assets\EOS\Scripts\Singletons\GOCache.js" />
      <Compile Include="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" />
+     <Compile Include="Assets\EOS\Scripts\SlugBase.js" />
      <Compile Include="Assets\EOS\Scripts\TankCamera.js" />
      <Compile Include="Assets\EOS\Scripts\TruckController.js" />
      <Compile Include="Assets\EOS\Scripts\TurretController.js" />
