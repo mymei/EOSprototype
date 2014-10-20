@@ -12,37 +12,37 @@ class SlugBase extends MonoBehaviour {
 			for (var hit : RaycastHit in hits) {
 				com = hit.collider.GetComponent("Armor") as Armor;
 				if (com != null) {
+					if (com.GetOwner() == owner) {
+						continue;					
+					}
 					factor = com.AttenuateHit(weaponTag);
-					if (factor < 1.0) {
-						break;
-					}
-				}
-			}
-			if (factor > 0) {
-				if (explosiveRange > 0) {
-					var colliders = Physics.OverlapSphere(hits[0].point, explosiveRange);
-					for (var col : Collider in colliders) {
-						com = col.GetComponent("Armor") as Armor;
-						if (com != null) {
-							com.HandleHit(weaponTag, factor);
-						}	
-					}
-				} else {
-					for (var hit : RaycastHit in hits) {
-						com = hit.collider.GetComponent("Armor") as Armor;
-						if (com != null) {
-							if (com.HandleHit(weaponTag, factor))
-								break;
-						}
-					}					
 				}
 				
-				for (var go in explosion) {
-					GOCache.Spawn(go, hits[0].point, transform.rotation, 1.0);
+				if (factor > 0) {
+					if (explosiveRange > 0) {
+						var colliders = Physics.OverlapSphere(hit.point, explosiveRange);
+						for (var col : Collider in colliders) {
+							com = col.GetComponent("Armor") as Armor;
+							if (com != null) {
+								com.HandleHit(weaponTag, factor);
+							}	
+						}
+					} else if (com != null) {
+						com.HandleHit(weaponTag, factor);		
+					}
+					
+					for (var go in explosion) {
+						GOCache.Spawn(go, hits[0].point, transform.rotation, 1.0);
+					}
 				}
+				collided = true;
+				break;			
 			}
-			collided = true;			
 		}
 	}
-
+	
+	private var owner : Transform;
+	function SetOwner(_owner:Transform) {
+		owner = _owner;
+	}
 }

@@ -68,9 +68,4 @@ class RocketController extends SlugBase {
 
 		spawnTime = Time.time;
 	}
-
-	private var owner : Transform;
-	function SetOwner(_owner:Transform) {
-		owner = _owner;
-	}
 }
