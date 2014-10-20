@@ -9,12 +9,14 @@ class PlayerSoldierHandler extends PlayerHandler {
 	}
 
 	function Update () {
-		if (Input.GetButtonDown("Fire1")) {
-			soldierController.SetFire(true);
-		} else if (Input.GetButtonUp("Fire1")) {
-			soldierController.SetFire(false);
-		}
+		if (MyNetwork.IsGOControlled(gameObject)) {
+			if (Input.GetButtonDown("Fire1")) {
+				soldierController.SetFire(true);
+			} else if (Input.GetButtonUp("Fire1")) {
+				soldierController.SetFire(false);
+			}
 		
-		soldierController.GetInput([Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")]);
+			soldierController.GetInput([Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")]);
+		}
 	}
 }
