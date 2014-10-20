@@ -41,12 +41,12 @@ function SetActiveBase(flag:boolean) {
 		var driver = targetBase.GetComponentInChildren(PlayerHandler);
 		if (driver) {
 			driver.enabled = flag;
-		}
-	}		
-	if (turretGunners) {
-		for (var cmp in turretGunners) {
-			(cmp as PlayerTurretGunner).SetEye(flag?transform:null);		
 		}		
+		if (flag) {
+			targetBase.BroadcastMessage("SetEye", transform, SendMessageOptions.DontRequireReceiver);
+		} else {
+			targetBase.BroadcastMessage("ResetEye", SendMessageOptions.DontRequireReceiver);
+		}
 	}
 }
 

@@ -37,6 +37,14 @@ class HumanController extends MonoBehaviour {
 		throttle = Mathf.SmoothDamp(throttle, targetThrottle, throttleVel, responsiveness, 1);
 	}
 	
+	function OnSerializeNetworkView(stream:BitStream, info:NetworkMessageInfo) {
+		var pos = transform.position;
+		stream.Serialize(steer);
+		stream.Serialize(pos);
+		stream.Serialize(throttle);
+		transform.position = pos;
+	}
+	
 	function Killed() {
 		dead = true;
 		anim.SetBool("Dead", true);	
