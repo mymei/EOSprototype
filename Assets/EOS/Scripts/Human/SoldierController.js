@@ -11,7 +11,7 @@ class SoldierController extends HumanController {
 	protected var Shot_Rifle_Hash = Animator.StringToHash("Base Layer.Shot_Rifle");
 
 	function Start () {
-		anim = GetComponent(Animator);
+		super.Start();
 		weaponController = GetComponentInChildren(WeaponController);
 	}
 
@@ -30,7 +30,7 @@ class SoldierController extends HumanController {
 					if (stateInfo.nameHash == Shot_Ready_Hash && !anim.IsInTransition(0)) {
 						anim.SetTrigger(shootHash);	
 						
-						weaponController.SetAim(weaponController.transform.position + transform.forward * 10);
+						weaponController.SetAim(Goal());
 						weaponController.FireWeapon();
 					} else if (stateInfo.nameHash == Shot_Rifle_Hash) {
 						preparationStartTime = 0.0;	
@@ -39,12 +39,13 @@ class SoldierController extends HumanController {
 			} else {
 				preparationStartTime = 0.0;
 			}
-			anim.SetBool(shootingHash, preparationStartTime != 0.0);		
+			anim.SetBool(shootingHash, preparationStartTime != 0.0);	
 		}
 	}
 	
 	function SetFire(flag:boolean) {
 		isFiring = flag;
+		Lock(flag);
 	}
 	
 	function isCoolDown() {

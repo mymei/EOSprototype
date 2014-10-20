@@ -1,18 +1,70 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/EOS/Scripts/PlayerHandler.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TruckController.js">
     <Files>
-      <File FileName="Assets/EOS/Scripts/Singletons/GOCache.js" Line="78" Column="33" />
-      <File FileName="Assets/EOS/Scripts/Human/SoldierController.js" Line="42" Column="8" />
-      <File FileName="Assets/EOS/Scripts/Human/HumanController.js" Line="45" Column="28" />
-      <File FileName="Assets/EOS/Scripts/Human/PlayerSoldierHandler.js" Line="13" Column="39" />
-      <File FileName="Assets/EOS/Scripts/PlayerHelicopterDriver.js" Line="1" Column="1" />
-      <File FileName="Assets/EOS/Scripts/PlayerHandler.js" Line="22" Column="5" />
-      <File FileName="Assets/EOS/Scripts/Network/MyNetwork.js" Line="1" Column="1" />
-      <File FileName="Assets/EOS/Scripts/TurretController.js" Line="177" Column="1" />
-      <File FileName="Assets/EOS/Scripts/PlayerTurretGunner.js" Line="13" Column="1" />
-      <File FileName="Assets/EOS/Scripts/TankCamera.js" Line="50" Column="3" />
+      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="5" Column="2" />
+      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="89" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Human\WeaponController.js" Line="1" Column="1" />
+      <File FileName="Assets\DiscardShells.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\WeaponChanger.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\GOCache.js" Line="1" Column="1" />
+      <File FileName="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\ModernTankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Human\HumanController.js" Line="43" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="16" Column="47" />
+      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="93" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="3" Column="48" />
+      <File FileName="Assets\EOS\Scripts\Armor.js" Line="7" Column="3" />
+      <File FileName="Assets\EOS\Scripts\Human\HumanArmor.js" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-UnityScript" expanded="True">
+            <Node name="EOS" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Human" expanded="True" />
+                <Node name="VehicleController" expanded="True" />
+                <Node name="TruckController.js" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State>
+          <Value>fireImpulse</Value>
+          <Value>ignited</Value>
+          <Value>networkView</Value>
+          <Value>speed</Value>
+          <Value>speed * Time.deltaTime</Value>
+          <Value>com</Value>
+          <Value>hits</Value>
+          <Value>hit</Value>
+          <Value>aimTarget.parent</Value>
+          <Value>mgr</Value>
+          <Value>SubdivisionManager.mgr</Value>
+          <Value>Physics.gravity</Value>
+          <Value>hori</Value>
+          <Value>velocity</Value>
+          <Value>Mathf.Atan(v_v / v_h)</Value>
+          <Value>Mathf.Cos(Mathf.Atan(v_v / v_h))</Value>
+          <Value>speed * Mathf.Cos(Mathf.Atan(v_v / v_h))</Value>
+          <Value>v_h</Value>
+          <Value>targetTexture</Value>
+          <Value>turretTargetOrientation</Value>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

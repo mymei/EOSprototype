@@ -39,7 +39,8 @@ function InnerFire(pos:Vector3, rot:Quaternion) {
 		var instance = MyNetwork.Instantiate(bullet, pos, rot, gameObject);
 		if (instance) {
 			instance.SendMessage("SetTarget", fireTarget, SendMessageOptions.DontRequireReceiver);
-			instance.SendMessage("SetOwner", owner, SendMessageOptions.DontRequireReceiver);
+			if (owner)
+				instance.SendMessage("SetOwner", owner, SendMessageOptions.DontRequireReceiver);
 		}
 
 		ammoLeft --;

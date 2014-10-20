@@ -2,7 +2,7 @@
 
 class PlayerSeeker extends MonoBehaviour {
 
-	var seekerEye:Transform;
+	protected var seekerEye:Transform;
 	var viewRange:float = 1000;
 	
 	function SetEye(eye:Transform) {
@@ -19,7 +19,7 @@ class PlayerSeeker extends MonoBehaviour {
 	private var hit:RaycastHit = new RaycastHit();
 	function Update () {
 		if (IsControllable()) {
-			var goal = seekerEye.position + (seekerEye.forward * viewRange);
+			goal = seekerEye.position + (seekerEye.forward * viewRange);
 			hitCollider = null;
 			if (Physics.Raycast(seekerEye.position, seekerEye.forward, hit, viewRange)) {
 				if (hit.collider.transform.root.GetComponentInChildren(PlayerHandler) != this) {
@@ -32,6 +32,10 @@ class PlayerSeeker extends MonoBehaviour {
 	
 	function IsControllable() {
 		return seekerEye != null;
+	}
+	
+	function Goal() {
+		return goal;
 	}
 
 }

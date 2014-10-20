@@ -60,7 +60,7 @@ function CacheGO(prefab:GameObject, go:GameObject) {
 function SetGOActive(effect:GameObject, flag:boolean) {
 	var handler = effect.GetComponent(EffectHandler) as EffectHandler;
 	if (handler) {
-		if (effect.networkView && effect.networkView.isMine) {
+		if (MyNetwork.IsConnected() && effect.networkView && effect.networkView.isMine) {
 			effect.networkView.RPC("SetEffectActive", RPCMode.All, flag);
 		} else {
 			handler.SetEffectActive(flag);		

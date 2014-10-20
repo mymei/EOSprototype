@@ -6,6 +6,8 @@ class HumanController extends MonoBehaviour {
 	var AngularSpeed = 90.0;
 	var responsiveness = 1.0;	
 
+	protected var directionLocked = false;
+	protected var seeker:PlayerSeeker;
 	protected var anim:Animator;
 	protected var throttle = 0.0;
 	protected var steer = 0.0;
@@ -13,13 +15,20 @@ class HumanController extends MonoBehaviour {
 
 	function Start () {
 		anim = GetComponent(Animator);
+		seeker = GetComponent(PlayerSeeker);
 	}
 
 	function Update () {
 	
 		if (!dead) {
-			var rotation = Quaternion.AngleAxis(AngularSpeed * Time.deltaTime * steer, Vector3.up);
-			transform.rotation *= rotation;
+			if (directionLocked) {
+				var dir = Goal() - transform.position;
+				dir.y = 0;
+				transform.rotation = Quaternion.LookRotation(dir, Vector3.up);
+			} else {
+				var rotation = Quaternion.AngleAxis(AngularSpeed * Time.deltaTime * steer, Vector3.up);
+				transform.rotation *= rotation;
+			}
 			
 			var actualThrottle = throttle >= 0?throttle:0.5 * throttle;
 			anim.SetFloat("Speed", Mathf.Abs(actualThrottle));
@@ -52,5 +61,13 @@ class HumanController extends MonoBehaviour {
 			var renderer = cmp as Renderer;
 			renderer.material.color = Color.black;
 		}
+	}
+	
+	function Lock(flag:boolean) {
+		directionLocked = flag;
+	}
+	
+	function Goal() {
+		return seeker?seeker.Goal():transform.forward * 10;	
 	}
 }
