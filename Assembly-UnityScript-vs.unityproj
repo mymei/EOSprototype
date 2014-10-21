@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DiscardShells.js" />
      <Compile Include="Assets\EOS\Scripts\AIBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AIRoutingBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AITankDriver.js" />
@@ -61,6 +60,7 @@
      <Compile Include="Assets\EOS\Scripts\Armors\T90Armor.js" />
      <Compile Include="Assets\EOS\Scripts\Armors\TechnicalArmor.js" />
      <Compile Include="Assets\EOS\Scripts\BulletController.js" />
+     <Compile Include="Assets\EOS\Scripts\DiscardShells.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\EffectHandler.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\Obstacle.js" />
      <Compile Include="Assets\EOS\Scripts\HelicopterController.js" />
@@ -75,6 +75,7 @@
      <Compile Include="Assets\EOS\Scripts\PlayerHandler.js" />
      <Compile Include="Assets\EOS\Scripts\PlayerHelicopterDriver.js" />
      <Compile Include="Assets\EOS\Scripts\PlayerSeeker.js" />
+     <Compile Include="Assets\EOS\Scripts\PlayerStart.js" />
      <Compile Include="Assets\EOS\Scripts\PlayerTurretGunner.js" />
      <Compile Include="Assets\EOS\Scripts\PlayerVehicleDriver.js" />
      <Compile Include="Assets\EOS\Scripts\RocketController.js" />
@@ -92,6 +93,7 @@
      <None Include="Assets\EOS\Shaders\TestShader.shader" />
      <None Include="Assets\license.txt" />
      <None Include="Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
+     <None Include="Assets\P4Connect\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,8 @@ class PlayerVehicleDriver extends PlayerHandler {
 	}
 
 	function Update () {
-		transform.BroadcastMessage("GetInput", [Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")], SendMessageOptions.DontRequireReceiver);
+		if (MyNetwork.IsGOControlled(gameObject)) {
+			transform.BroadcastMessage("GetInput", [Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")], SendMessageOptions.DontRequireReceiver);
+		}
 	}
 }

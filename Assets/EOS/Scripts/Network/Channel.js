@@ -245,13 +245,22 @@ function LoadLevel (level : String, levelPrefix : int)
 //        }
 
 	var id:int = int.Parse(Network.player.ToString());
+	var camera = FindObjectOfType(TankCamera) as TankCamera;
+	var starts = FindObjectsOfType(PlayerStart);	
+	
 	for (var obj in missionList) {
 		var mi = obj as MissionInfo;
 		if (mi.player == id) {		
-			var vehicle = Network.Instantiate(mi.go, Vector3(100 + 10 * id, 4, 100),Quaternion.identity, 0);
-			(FindObjectOfType(TankCamera) as TankCamera).target = vehicle.transform;
-			(FindObjectOfType(TankCamera) as TankCamera).InitTarget();
-			break;
+			for (var obj2 in starts) {
+				var start = obj2 as PlayerStart;
+				if (start.playerID == id) {
+					var vehicle = Network.Instantiate(mi.go, start.transform.position, start.transform.rotation, 0);
+					camera.target = vehicle.transform;
+					camera.InitTarget();
+					break;				
+				}
+			}
+			break;	
 		}
 	}
 }

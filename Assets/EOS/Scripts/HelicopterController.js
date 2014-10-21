@@ -62,38 +62,32 @@ class HelicopterController extends VehicleController {
 		frontSteer = Mathf.SmoothDamp(frontSteer, targetFrontSteer, frontSteerVel, responsiveness, 1);
 		sideSteer = Mathf.SmoothDamp(sideSteer, targetFrontSteer==0?0:targetSideSteer, sideSteerVel, responsiveness, 1);
 	}
+	
+	var axis:Vector3;
+	var angle:float;
 
 	function UpdateRotorGraphics(relativeVelocity : Vector3)
 	{
-	//	wheelCount = -1;
-	//	
-	//	for(var w : Wheel in wheels)
-	//	{
-	//		wheelCount++;
-	//		var wheel2 : WheelCollider = w.collider;
-	//		
-	//		w.tireGraphic.Rotate(Vector3.right * (wheel2.rpm / 60.0 * Time.deltaTime / wheel2.radius * 460));
-	//		
-	//		if (w.steerWheel) {
-	//			w.wheelGraphic.localEulerAngles.y = steer * maxTurn;
-	//		}
-	//	}
-	//	transform.Find("Rotor_Control").transform.rotation = Quaternion.AngleAxis(1000 * Time.deltaTime, Vector3.up) * Quaternion.AngleAxis(10, Vector3.right);
+		if (MyNetwork.IsGOControlled(gameObject)) {
 
-		var tmpAxis = transform.InverseTransformDirection(rotorAxis);
+			var tmpAxis = transform.InverseTransformDirection(rotorAxis);
 
-		var axis = Vector3.Cross(tmpAxis.normalized, Vector3.up);
-		var angle = Mathf.Asin(axis.magnitude) * Mathf.Rad2Deg;
-
-		var formerAxis = Vector3.Cross(transform.Find("Rotor_root").transform.localRotation * Vector3.up, Vector3.up);
-		var formerAngle = Mathf.Asin(formerAxis.magnitude) * Mathf.Rad2Deg;
+			axis = Vector3.Cross(tmpAxis.normalized, Vector3.up);
+			angle = Mathf.Asin(axis.magnitude) * Mathf.Rad2Deg;
+		}
 		
+		var formerAxis = Vector3.Cross(transform.Find("Rotor_root").transform.localRotation * Vector3.up, Vector3.up);
+		var formerAngle = Mathf.Asin(formerAxis.magnitude) * Mathf.Rad2Deg;	
+				
 		var tmpRot = transform.Find("Rotor_root").transform.localRotation * Quaternion.AngleAxis(1000 * Time.deltaTime, Vector3.up);
 		tmpRot = Quaternion.AngleAxis(angle, axis) * Quaternion.AngleAxis(formerAngle, formerAxis.normalized) * tmpRot;
-		transform.Find("Rotor_root").transform.localRotation = tmpRot;
-		
+		transform.Find("Rotor_root").transform.localRotation = tmpRot;		
 		transform.Find("Body_root").transform.localRotation = Quaternion.AngleAxis(angle, axis);
-
+	}
+	
+	function OnSerializeNetworkView(stream:BitStream, info:NetworkMessageInfo) {
+		stream.Serialize(axis);
+		stream.Serialize(angle);
 	}
 
 	var forwardForce:Vector3;

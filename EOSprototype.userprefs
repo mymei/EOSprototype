@@ -1,30 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\Network\Channel.js">
     <Files>
-      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="71" Column="1" />
-      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\SlugBase.js" Line="38" Column="21" />
-      <File FileName="Assets\EOS\Scripts\Armors\APCArmor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\T90Armor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\TechnicalArmor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\Leopard2Armor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\ChopperArmor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Human\HumanArmor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\ReactiveArmor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\Armor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\PlayerSeeker.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="122" Column="36" />
+      <File FileName="Assets\EOS\Scripts\PlayerHelicopterDriver.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\TurretController.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\TankCamera.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Network\Channel.js" Line="38" Column="11" />
+      <File FileName="Assets\EOS\Scripts\Network\Channel.js" Line="248" Column="58" />
+      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Human\HumanController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Etc\EffectHandler.js" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -45,23 +29,7 @@
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>seeker</Value>
-          <Value>HP</Value>
-          <Value>SafetySwitch</Value>
-          <Value>turretController.magazineTag</Value>
-          <Value>magazine.magazineTag</Value>
-          <Value>magazineTag</Value>
-          <Value>HP</Value>
-          <Value>enabled</Value>
-          <Value>factor</Value>
-          <Value>hit</Value>
-          <Value>gun.transform.localRotation</Value>
-          <Value>turretTargetOrientation.eulerAngles.x</Value>
-          <Value>transform.root</Value>
-          <Value>actualTargetPos</Value>
-          <Value>gun.forward</Value>
-          <Value>gun</Value>
-          <Value>currentTargetPos</Value>
+          <Value>turretControllers</Value>
         </State>
       </Pad>
     </Pads>
