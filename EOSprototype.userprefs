@@ -1,27 +1,30 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TankCamera.js">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\Network\Channel.js">
     <Files>
-      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="42" Column="1" />
-      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="33" Column="20" />
-      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="72" Column="10" />
-      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="61" Column="21" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="63" Column="21" />
-      <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="7" Column="36" />
-      <File FileName="Assets\EOS\Scripts\SlugBase.js" Line="40" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\APCArmor.js" Line="7" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\T90Armor.js" Line="24" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\TechnicalArmor.js" Line="26" Column="2" />
-      <File FileName="Assets\EOS\Scripts\Armors\Leopard2Armor.js" Line="25" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\ChopperArmor.js" Line="25" Column="1" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="15" Column="2" />
-      <File FileName="Assets\EOS\Scripts\Human\HumanArmor.js" Line="6" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\ReactiveArmor.js" Line="24" Column="13" />
-      <File FileName="Assets\EOS\Scripts\Armors\Armor.js" Line="13" Column="19" />
-      <File FileName="Assets\EOS\Scripts\PlayerSeeker.js" Line="28" Column="5" />
-      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="40" Column="28" />
-      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="111" Column="6" />
-      <File FileName="Assets\EOS\Scripts\TankCamera.js" Line="118" Column="26" />
+      <File FileName="Assets\EOS\Scripts\RocketController.js" Line="71" Column="1" />
+      <File FileName="Assets\EOS\Scripts\BulletController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Magazine.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TruckController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\HelicopterController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\SlugBase.js" Line="38" Column="21" />
+      <File FileName="Assets\EOS\Scripts\Armors\APCArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\T90Armor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\TechnicalArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\Leopard2Armor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\ChopperArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Human\HumanArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\ReactiveArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\Armor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerSeeker.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TankCamera.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Network\Channel.js" Line="38" Column="11" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -29,9 +32,9 @@
           <Node name="Assembly-UnityScript" expanded="True">
             <Node name="EOS" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Armors" expanded="True" />
-                <Node name="Human" expanded="True" />
-                <Node name="TankCamera.js" selected="True" />
+                <Node name="Network" expanded="True">
+                  <Node name="Channel.js" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -52,6 +55,13 @@
           <Value>enabled</Value>
           <Value>factor</Value>
           <Value>hit</Value>
+          <Value>gun.transform.localRotation</Value>
+          <Value>turretTargetOrientation.eulerAngles.x</Value>
+          <Value>transform.root</Value>
+          <Value>actualTargetPos</Value>
+          <Value>gun.forward</Value>
+          <Value>gun</Value>
+          <Value>currentTargetPos</Value>
         </State>
       </Pad>
     </Pads>

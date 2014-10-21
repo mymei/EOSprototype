@@ -108,10 +108,12 @@ function Update () {
 
 	if (MyNetwork.IsGOControlled(gameObject)) {
 		var currentTargetPos = transform.position + gun.forward * maxRange;
-		if(Physics.Raycast(transform.position, gun.forward, hit, maxRange, ~(LayerMask.GetMask("projectile") | LayerMask.GetMask("Invisible")))) {
-			if (hit.collider.transform.root.GetComponentInChildren(TurretController) != this) {
+		var hits = Physics.RaycastAll(transform.position, gun.forward, maxRange, ~(LayerMask.GetMask("projectile")));
+		for (var hit:RaycastHit in hits) {
+			if (hit.collider.transform.root != transform.root) {
 				currentTargetPos = hit.point;			
-			}
+				break;
+			}		
 		}
 		actualTargetPos = Vector3.Lerp(actualTargetPos, currentTargetPos, 0.8);	
 		

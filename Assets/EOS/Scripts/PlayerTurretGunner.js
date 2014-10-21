@@ -20,7 +20,7 @@ class PlayerTurretGunner extends PlayerSeeker {
 	}
 	
 	function IsControllable():boolean {
-		return super.IsControllable() && turretControllers.length > 0 && MyNetwork.IsGOControlled(gameObject);
+		return super.IsControllable() && turretControllers != null && turretControllers.length > 0 && MyNetwork.IsGOControlled(gameObject);
 	}
 
 	private var firing = false;
