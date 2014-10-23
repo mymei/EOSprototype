@@ -107,7 +107,15 @@ function LateUpdate()
 			euler.x -= Input.GetAxis("Mouse Y") / mouseMoveSensitivity * Mathf.Rad2Deg;
 			euler.y += Input.GetAxis("Mouse X") / mouseMoveSensitivity * Mathf.Rad2Deg;	
 		} else {
-			euler = Quaternion.FromToRotation(Vector3.forward, aim.position - newTargetPosition).eulerAngles;	
+			var bd:Bounds;
+			for (var cmp in aim.GetComponentsInChildren(Renderer)) {
+				if (bd.extents == Vector3.zero) {
+					bd = (cmp as Renderer).bounds;
+				} else {
+					bd.Encapsulate((cmp as Renderer).bounds);
+				}
+			}
+			euler = Quaternion.FromToRotation(Vector3.forward, bd.center - newTargetPosition).eulerAngles;	
 		}
 		euler.x -= euler.x > 180?360:0;
 		euler.x = Mathf.Max(cameraDropAngle, Mathf.Min(cameraElevateAngle, euler.x));

@@ -79,9 +79,12 @@ function Start () {
 
 private var turretTargetOrientation:Quaternion;
 function UpdateTurretOrientation(pos:Vector3) {
-	var dir = transform.parent.InverseTransformDirection(pos - transform.position);		
+	var dir = transform.parent.InverseTransformDirection(pos - gun.position);		
 	turretTargetOrientation = Quaternion.LookRotation(dir);
 	
+//	dir = gun.parent.InverseTransformDirection(pos - gun.position);
+	
+//	var tmp = Quaternion.LookRotation(dir).eulerAngles.x + euler.x;
 	var tmp = turretTargetOrientation.eulerAngles.x + euler.x;
 	tmp = tmp > 180?Mathf.Max(360 - elevation, tmp):tmp;
 	tmp = tmp <= 180?Mathf.Min(-depression, tmp):tmp;
@@ -107,12 +110,15 @@ function Update () {
 	}
 
 	if (MyNetwork.IsGOControlled(gameObject)) {
-		var currentTargetPos = transform.position + gun.forward * maxRange;
-		var hits = Physics.RaycastAll(transform.position, gun.forward, maxRange, ~(LayerMask.GetMask("projectile")));
+		var currentTargetPos = gun.position + gun.forward * maxRange;
+		var hits = Physics.RaycastAll(gun.position, gun.forward, maxRange, ~(LayerMask.GetMask("projectile")));
+		var dist = Mathf.Infinity;
 		for (var hit:RaycastHit in hits) {
 			if (hit.collider.transform.root != transform.root) {
-				currentTargetPos = hit.point;			
-				break;
+				if (hit.distance < dist) {
+					dist = hit.distance;
+					currentTargetPos = hit.point;			
+				}
 			}		
 		}
 		actualTargetPos = Vector3.Lerp(actualTargetPos, currentTargetPos, 0.8);	
@@ -179,7 +185,7 @@ function SetSafetySwitch(flag:boolean) {
 	SafetySwitch = flag;
 }
 function IsSafetySwitchOff():boolean {
-	return !SafetySwitch;
+	return enabled && !SafetySwitch;
 }
 
 function DrawHUD() {

@@ -76,7 +76,12 @@ class TankController extends VehicleController {
 	}
 
 	function FixedUpdate()
-	{	
+	{
+		if (!enabled) {
+			throttle = 0;
+			steer = 0;		
+		}	
+	
 		var relativeVelocity : Vector3 = transform.InverseTransformDirection(rigidbody.velocity);
 		ApplyThrottle(relativeVelocity);	
 	}
@@ -274,6 +279,15 @@ class TankController extends VehicleController {
 			return true;
 		else
 			return false;
+	}
+	
+	function ApplyDamage(damage:int) {
+		super.ApplyDamage(damage);
+		if (!enabled) {
+			steer = 0;
+			throttle = 0;
+			FixedUpdate();	
+		}
 	}
 
 }

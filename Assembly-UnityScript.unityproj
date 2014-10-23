@@ -47,8 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\EOS\Scripts\AIBehavior.js" />
+     <Compile Include="Assets\EOS\Scripts\AIDriver.js" />
+     <Compile Include="Assets\EOS\Scripts\AIPatrolBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AIRoutingBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AITankDriver.js" />
+     <Compile Include="Assets\EOS\Scripts\AITriggerBehavior.js" />
      <Compile Include="Assets\EOS\Scripts\AITruckDriver.js" />
      <Compile Include="Assets\EOS\Scripts\AIVehicleDriver.js" />
      <Compile Include="Assets\EOS\Scripts\AreaTrigger.js" />
@@ -61,6 +64,7 @@
      <Compile Include="Assets\EOS\Scripts\Armors\TechnicalArmor.js" />
      <Compile Include="Assets\EOS\Scripts\BulletController.js" />
      <Compile Include="Assets\EOS\Scripts\DiscardShells.js" />
+     <Compile Include="Assets\EOS\Scripts\Etc\Destructable.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\EffectHandler.js" />
      <Compile Include="Assets\EOS\Scripts\Etc\Obstacle.js" />
      <Compile Include="Assets\EOS\Scripts\HelicopterController.js" />
@@ -89,9 +93,15 @@
      <Compile Include="Assets\EOS\Scripts\VehicleController\TankController.js" />
      <Compile Include="Assets\EOS\Scripts\VehicleController\VehicleController.js" />
      <Compile Include="Assets\EOS\Scripts\WeaponChanger.js" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\ScreenshotTakerPro.js" />
+     <None Include="Assets\Level\Environment\Origin\Tools\Blend SM2.shader" />
+     <None Include="Assets\Level\Environment\Origin\Tools\Blend SM3.shader" />
      <None Include="Assets\EOS\Materials\Resources\Clips.txt" />
      <None Include="Assets\EOS\Shaders\TestShader.shader" />
      <None Include="Assets\license.txt" />
+     <None Include="Assets\Level\Environment\Origin\Tools\SSAO with range param\frag_ao.cginc" />
+     <None Include="Assets\Level\Environment\Origin\Tools\SSAO with range param\SSAOShader.shader" />
+     <None Include="Assets\Level\Environment\_info.txt" />
      <None Include="Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
      <None Include="Assets\P4Connect\readme.txt" />
   </ItemGroup>

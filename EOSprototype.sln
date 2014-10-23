@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{9A1BE35D-1483-B194-527D-6A3CED135313}") = "EOSprototype", "Assembly-CSharp.csproj", "{BFCC5945-CCCC-0131-4A12-84E1A55DE34A}"
 EndProject
+Project("{9A1BE35D-1483-B194-527D-6A3CED135313}") = "EOSprototype", "Assembly-CSharp-Editor.csproj", "{B570617E-C23E-F5C8-FA4F-8E5DA764C634}"
+EndProject
 Project("{9A1BE35D-1483-B194-527D-6A3CED135313}") = "EOSprototype", "Assembly-UnityScript.unityproj", "{8E70EC86-2517-A206-2EFF-7D705604D5A6}"
 EndProject
 Global
@@ -15,6 +17,10 @@ Global
 		{BFCC5945-CCCC-0131-4A12-84E1A55DE34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFCC5945-CCCC-0131-4A12-84E1A55DE34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFCC5945-CCCC-0131-4A12-84E1A55DE34A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B570617E-C23E-F5C8-FA4F-8E5DA764C634}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B570617E-C23E-F5C8-FA4F-8E5DA764C634}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B570617E-C23E-F5C8-FA4F-8E5DA764C634}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B570617E-C23E-F5C8-FA4F-8E5DA764C634}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8E70EC86-2517-A206-2EFF-7D705604D5A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E70EC86-2517-A206-2EFF-7D705604D5A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E70EC86-2517-A206-2EFF-7D705604D5A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -23,7 +29,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-														GlobalSection(MonoDevelopProperties) = preSolution
+																																											GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

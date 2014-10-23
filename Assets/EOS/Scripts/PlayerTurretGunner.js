@@ -35,8 +35,8 @@ class PlayerTurretGunner extends PlayerSeeker {
 			} else if (Input.GetButtonUp("Fire1")) {
 				firing = false;			
 			} else if (Input.GetButtonDown("Fire2")) {
-				if (hitCollider != null && 1 << hitCollider.gameObject.layer == LayerMask.GetMask("vehicle") && hitCollider.transform.root.GetComponentInChildren(PlayerTurretGunner) != this) {
-					var tmp = turretController.lockOn(hitCollider.transform);
+				if (hitCollider != null && 1 << hitCollider.gameObject.layer == LayerMask.GetMask("vehicle")) {
+					var tmp = turretController.lockOn(hitCollider.transform.root);
 					seekerEye.SendMessage("SetAim", tmp == null?seekerEye:tmp, SendMessageOptions.DontRequireReceiver);
 				} else {
 					turretController.lockOn(null);

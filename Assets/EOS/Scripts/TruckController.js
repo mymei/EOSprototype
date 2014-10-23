@@ -284,4 +284,13 @@ class TruckController extends VehicleController {
 		else
 			return false;
 	}
+	
+	function ApplyDamage(damage:int) {
+		super.ApplyDamage(damage);
+		if (!enabled) {
+			steer = 0;
+			throttle = 0;
+			FixedUpdate();	
+		}
+	}
 }

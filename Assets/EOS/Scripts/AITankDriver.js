@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-class AITankDriver extends AIVehicleDriver {
+class AITankDriver extends AIDriver {
 
 	var p1 = 1.0;
 	var d1 = 1.0;
@@ -10,7 +10,7 @@ class AITankDriver extends AIVehicleDriver {
 	private var history1:float;
 	private var history2:float;
 
-	function ControlVehicle(goal:Vector3) {
+	function Drive(goal:Vector3) {
 		
 		var direction = goal - transform.position;
 		var ref1 = Vector3.Dot(transform.forward, direction);

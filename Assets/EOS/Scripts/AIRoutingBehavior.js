@@ -1,12 +1,13 @@
 ﻿#pragma strict
 
-var Goals:Transform[];
-
-class AIRoutingBehavior extends AIBehavior {
+class AIRoutingBehavior extends AITriggerBehavior {
+	var Goals:Transform[];
 	function HandleTriggerEvent(trigger:Transform) {
-		if (trigger == ListeningTrigger) {
-			for (var goal in Goals) {
-				transform.SendMessage("AddGoal", goal, SendMessageOptions.DontRequireReceiver);
+		if (MyNetwork.IsGOControlled(gameObject)) {
+			if (trigger == ListeningTrigger) {
+				for (var goal in Goals) {
+					transform.SendMessage("AddGoal", goal, SendMessageOptions.DontRequireReceiver);
+				}
 			}
 		}
 	}

@@ -64,10 +64,21 @@
      <Compile Include="Assets\Detonator Explosion Framework\TestScene\DetonatorTest.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\TestScene\TouchToMouse.cs" />
      <Compile Include="Assets\EOS\Scripts\Examples\TankController.cs" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\Birds Swarm\Bird.cs" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\Birds Swarm\Swarm.cs" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\Birds Swarm\SwarmCenter.cs" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\Rotateobject.cs" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\SSAO with range param\SSAOEffectDepthCutoff.cs" />
+     <Compile Include="Assets\Level\Environment\Origin\Tools\TerrainRand.cs" />
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
+     <None Include="Assets\Level\Environment\Origin\Tools\Blend SM2.shader" />
+     <None Include="Assets\Level\Environment\Origin\Tools\Blend SM3.shader" />
      <None Include="Assets\EOS\Materials\Resources\Clips.txt" />
      <None Include="Assets\EOS\Shaders\TestShader.shader" />
      <None Include="Assets\license.txt" />
+     <None Include="Assets\Level\Environment\Origin\Tools\SSAO with range param\frag_ao.cginc" />
+     <None Include="Assets\Level\Environment\Origin\Tools\SSAO with range param\SSAOShader.shader" />
+     <None Include="Assets\Level\Environment\_info.txt" />
      <None Include="Assets\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
      <None Include="Assets\P4Connect\readme.txt" />
   </ItemGroup>

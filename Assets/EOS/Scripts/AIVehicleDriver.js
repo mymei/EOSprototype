@@ -35,11 +35,15 @@ class AIVehicleDriver extends MonoBehaviour {
 		obstacles.Push(obstacle);
 	}
 	
+	function IsIdle() {
+		return currentGoal == goals.length;	
+	}
+	
 	private var localGoalPos:Vector3;
 	private var currentDirection:Vector3;
 	private var pathInvalidated = false;
 	function Update () {
-		if (currentGoal < goals.length) {
+		if (!IsIdle()) {
 			if (path == null) {
 				path = new NavMeshPath();
 			}
@@ -77,6 +81,8 @@ class AIVehicleDriver extends MonoBehaviour {
 					path.ClearCorners();
 					
 					if (currentGoal == goals.length) {
+						currentGoal = 0;
+						goals.Clear();
 						transform.BroadcastMessage("GetInput", [0.0, 0.0], SendMessageOptions.DontRequireReceiver);
 					}
 				}

@@ -21,7 +21,7 @@ class PlayerSeeker extends MonoBehaviour {
 			goal = seekerEye.position + (seekerEye.forward * viewRange);
 			hitCollider = null;
 			if (Physics.Raycast(seekerEye.position, seekerEye.forward, hit, viewRange, ~(LayerMask.GetMask("Invisible")))) {
-				if (hit.collider.transform.root.GetComponentInChildren(PlayerHandler) != this) {
+				if (hit.collider.transform.root != transform.root) {
 					goal = hit.point;
 					hitCollider = hit.collider;
 				} 
