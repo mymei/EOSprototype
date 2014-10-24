@@ -75,6 +75,8 @@ function LateUpdate()
 {
 	UpdateTarget();
 	
+	SubdivisionManager.showCovers(currentTarget.transform.position);
+	
 	if (currentTarget) {
 		if (isZooming) {
 			zoomLevel = zoomLevel + (Input.GetAxis("Mouse ScrollWheel")!=0?Mathf.Sign(Input.GetAxis("Mouse ScrollWheel")):0);

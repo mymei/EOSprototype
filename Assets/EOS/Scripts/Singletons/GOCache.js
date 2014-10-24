@@ -16,7 +16,21 @@ function Awake () {
 }
 
 function Start () {
+//	var path = "Assets/test.bytes";
+//	if (File.Exists("Assets/test.bytes")) {
+//		File.Delete(path);
+//	}
+//	File.Create(path);
+//	
+//	var test2:int = 10;
+//	var test3 = BitConverter.GetBytes(test2);
+//	var test4 = BitConverter.ToInt32(test3, 0);
+//	
+//	Debug.Log(test3);
 
+//	BinaryReader(fs);
+//	Resources.Load(
+	
 }
 
 function Update () {

@@ -94,6 +94,7 @@
      <Compile Include="Assets\EOS\Scripts\VehicleController\VehicleController.js" />
      <Compile Include="Assets\EOS\Scripts\WeaponChanger.js" />
      <Compile Include="Assets\Level\Environment\Origin\Tools\ScreenshotTakerPro.js" />
+     <Compile Include="Assets\PrecomputedCoverVolume.js" />
      <None Include="Assets\Level\Environment\Origin\Tools\Blend SM2.shader" />
      <None Include="Assets\Level\Environment\Origin\Tools\Blend SM3.shader" />
      <None Include="Assets\EOS\Materials\Resources\Clips.txt" />

@@ -1,64 +1,43 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\TankCamera.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\EOS\Scripts\Singletons\SubdivisionManager.js">
     <Files>
-      <File FileName="Assets\EOS\Scripts\Etc\Destructable.js" Line="30" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="26" Column="2" />
-      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="87" Column="40" />
+      <File FileName="Assets\EOS\Scripts\Singletons\GOCache.js" Line="22" Column="5" />
+      <File FileName="Assets\EOS\Scripts\Etc\Destructable.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Network\MyNetwork.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Singletons\SubdivisionManager.js" Line="77" Column="3" />
       <File FileName="Assets\EOS\Scripts\AreaTrigger.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\SlugBase.js" Line="59" Column="7" />
-      <File FileName="Assets\EOS\Scripts\Network\Channel.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\SlugBase.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Network\Channel.js" Line="253" Column="27" />
       <File FileName="Assets\EOS\Scripts\BulletController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\Armors\Leopard2Armor.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\RocketController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\Armors\Armor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\ReactiveArmor.js" Line="17" Column="2" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="44" Column="4" />
-      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="285" Column="1" />
+      <File FileName="Assets\EOS\Scripts\Armors\ReactiveArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\VehicleController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\VehicleController\TankController.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\Armors\T90Armor.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\Armors\APCArmor.js" Line="1" Column="1" />
       <File FileName="Assets\EOS\Scripts\Armors\TechnicalArmor.js" Line="1" Column="1" />
-      <File FileName="Assets\EOS\Scripts\Armors\ChopperArmor.js" Line="14" Column="35" />
-      <File FileName="Assets\EOS\Scripts\Singletons\GOCache.js" Line="20" Column="2" />
-      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="88" Column="60" />
-      <File FileName="Assets\EOS\Scripts\TankCamera.js" Line="113" Column="36" />
-      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="35" Column="44" />
-      <File FileName="Assets\EOS\Scripts\PlayerSeeker.js" Line="22" Column="4" />
+      <File FileName="Assets\EOS\Scripts\Armors\ChopperArmor.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TurretController.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\TankCamera.js" Line="78" Column="27" />
+      <File FileName="Assets\EOS\Scripts\PlayerTurretGunner.js" Line="1" Column="1" />
+      <File FileName="Assets\EOS\Scripts\PlayerSeeker.js" Line="1" Column="1" />
+      <File FileName="Assets\PrecomputedCoverVolume.js" Line="6" Column="20" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-UnityScript" expanded="True">
-            <Node name="EOS" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="Armors" expanded="True" />
-                <Node name="Etc" expanded="True" />
-                <Node name="Network" expanded="True" />
-                <Node name="Singletons" expanded="True" />
-                <Node name="VehicleController" expanded="True" />
-                <Node name="TankCamera.js" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>turretControllers</Value>
-          <Value>mesh</Value>
-          <Value>goals</Value>
-          <Value>currentGoal</Value>
-          <Value>goals[currentGoal]</Value>
-          <Value>muzzles</Value>
-          <Value>hit</Value>
-          <Value>explosiveRange</Value>
-          <Value>enabled</Value>
-          <Value>HP</Value>
-          <Value>aim.transform.position</Value>
-          <Value>bd</Value>
+          <Value>PCLdensity</Value>
+          <Value>PCL</Value>
+          <Value>list.length</Value>
         </State>
       </Pad>
     </Pads>
